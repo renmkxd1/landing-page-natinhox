@@ -11,6 +11,8 @@ Página estática pronta para substituir o Linktree.
 - `script.js`
 - `favicon.svg`
 - `avatar-natinhox.png`
+- `graciosa-logo.png` — logo da Graciosa Roleplay (banner de destaque)
+- `apoie-natinhox.png` — arte de apoio/LivePix (banner "Apoie o NATINHOX")
 - `manifest.json` — permite "Adicionar à tela inicial" (PWA) no Android/Chrome/iOS
 - `icons/` — apple-touch-icon.png (180×180) e ícones PNG do manifest (192/512), gerados a partir do `favicon.svg`
 - `fonts/` — Inter e Orbitron auto-hospedadas (sem dependência do Google Fonts)
@@ -57,6 +59,24 @@ referências (`https://renmkxd1.github.io/landing-page-natinhox/` → seu domín
 - Graciosa Roleplay Discord: https://discord.gg/KwWGzyrzhn
 - Graciosa Roleplay Instagram: https://www.instagram.com/graciosaroleplay/
 - Marvia System: https://www.marviasistem.com.br/
+
+## Seções em destaque
+- **Graciosa Roleplay** — banner dourado logo abaixo da Twitch/Kick, com a
+  logo oficial (`graciosa-logo.png`), badge "PARCEIRO OFICIAL" e botões para
+  Discord/Instagram da cidade.
+- **Apoie o NATINHOX** — banner com a arte de doação/LivePix
+  (`apoie-natinhox.png`) e CTA "Doar via LivePix".
+- **Patrocinadores** — seção com aviso de que aceito parcerias/patrocínios e
+  3 espaços vazios (`sponsor-slot`) reservados para logos de marcas
+  parceiras. Para preencher um espaço, troque o `<div class="sponsor-slot">`
+  correspondente em `index.html` por um `<a>` com a logo do patrocinador.
+
+## Ícones de plataforma
+Os ícones de TikTok, YouTube, Instagram, Discord e Twitch/Kick são SVGs
+inline (path oficial da marca) da biblioteca
+[Simple Icons](https://simpleicons.org/) (licença CC0). O ícone da Marvia
+System usa o ícone `trending-up` da [Lucide](https://lucide.dev/) (licença
+ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
 
 ## Observações
 - O `script.js` registra cliques somente no navegador do visitante via
