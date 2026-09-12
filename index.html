@@ -8,32 +8,56 @@
   <meta property="og:title" content="NATINHOX | Streamer & Gamer" />
   <meta property="og:description" content="Acompanhe as lives, cortes e todas as redes oficiais do NATINHOX." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="avatar-natinhox.png" />
+  <meta property="og:url" content="https://renmkxd1.github.io/landing-page-natinhox/" />
+  <meta property="og:image" content="https://renmkxd1.github.io/landing-page-natinhox/avatar-natinhox.png" />
   <meta property="og:locale" content="pt_BR" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="NATINHOX | Streamer & Gamer" />
   <meta name="twitter:description" content="Acompanhe as lives, cortes e todas as redes oficiais do NATINHOX." />
-  <meta name="twitter:image" content="avatar-natinhox.png" />
+  <meta name="twitter:image" content="https://renmkxd1.github.io/landing-page-natinhox/avatar-natinhox.png" />
   <title>NATINHOX | Streamer & Gamer</title>
+  <link rel="canonical" href="https://renmkxd1.github.io/landing-page-natinhox/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="manifest" href="manifest.json" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="NATINHOX" />
+  <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="avatar-natinhox.png" as="image" />
   <link rel="stylesheet" href="styles.css" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "NATINHOX",
-    "description": "Streamer, gamer e criador de conteúdo. GTA RP, Valorant, cortes e comunidade.",
-    "image": "avatar-natinhox.png",
-    "sameAs": [
-      "https://www.twitch.tv/natinhox",
-      "https://kick.com/natinhox1",
-      "https://www.tiktok.com/@oficial_natinhox",
-      "https://youtube.com/@natinhox1",
-      "https://www.instagram.com/natinhox_/",
-      "https://discord.gg/MXScyEtW"
+    "@graph": [
+      {
+        "@type": "Person",
+        "name": "NATINHOX",
+        "url": "https://renmkxd1.github.io/landing-page-natinhox/",
+        "description": "Streamer, gamer e criador de conteúdo. GTA RP, Valorant, cortes e comunidade.",
+        "image": "https://renmkxd1.github.io/landing-page-natinhox/avatar-natinhox.png",
+        "sameAs": [
+          "https://www.twitch.tv/natinhox",
+          "https://kick.com/natinhox1",
+          "https://www.tiktok.com/@oficial_natinhox",
+          "https://youtube.com/@natinhox1",
+          "https://www.instagram.com/natinhox_/",
+          "https://discord.gg/thczBVge"
+        ]
+      },
+      {
+        "@type": "ItemList",
+        "name": "Redes oficiais do NATINHOX",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Twitch", "url": "https://www.twitch.tv/natinhox" },
+          { "@type": "ListItem", "position": 2, "name": "Kick", "url": "https://kick.com/natinhox1" },
+          { "@type": "ListItem", "position": 3, "name": "TikTok", "url": "https://www.tiktok.com/@oficial_natinhox" },
+          { "@type": "ListItem", "position": 4, "name": "YouTube", "url": "https://youtube.com/@natinhox1" },
+          { "@type": "ListItem", "position": 5, "name": "Instagram", "url": "https://www.instagram.com/natinhox_/" },
+          { "@type": "ListItem", "position": 6, "name": "Discord", "url": "https://discord.gg/thczBVge" },
+          { "@type": "ListItem", "position": 7, "name": "LivePix", "url": "https://www.livepix.gg/natinhox" },
+          { "@type": "ListItem", "position": 8, "name": "Kwai", "url": "https://k.kwai.com/u/@Natinhox/GyCMK8mJ" }
+        ]
+      }
     ]
   }
   </script>
@@ -63,6 +87,11 @@
         <span>⚡ Valorant</span>
         <span>🎬 Cortes</span>
       </div>
+
+      <button type="button" class="share-btn" id="shareBtn">
+        <span class="share-icon" aria-hidden="true">↗</span>
+        <span id="shareBtnLabel">Compartilhar perfil</span>
+      </button>
     </header>
 
     <section class="featured">
@@ -119,7 +148,7 @@
           <span class="arrow" aria-hidden="true">↗</span>
         </a>
 
-        <a class="link-card" href=" https://discord.gg/thczBVge" target="_blank" rel="noopener noreferrer">
+        <a class="link-card" href="https://discord.gg/thczBVge" target="_blank" rel="noopener noreferrer">
           <div class="icon" aria-hidden="true">◉</div>
           <div class="text">
             <strong>Discord NATINHOX</strong>

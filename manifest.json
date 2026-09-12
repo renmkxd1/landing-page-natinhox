@@ -1,0 +1,19 @@
+{
+  "name": "NATINHOX | Streamer & Gamer",
+  "short_name": "NATINHOX",
+  "description": "Lives, cortes, GTA RP, Valorant e todas as redes oficiais do NATINHOX.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#050816",
+  "theme_color": "#050816",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://renmkxd1.github.io/landing-page-natinhox/sitemap.xml

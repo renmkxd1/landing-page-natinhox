@@ -1,3 +1,21 @@
+@font-face{
+  font-family:"Inter";
+  font-style:normal;
+  font-weight:400 900;
+  font-display:swap;
+  src:url("fonts/inter-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+@font-face{
+  font-family:"Orbitron";
+  font-style:normal;
+  font-weight:400 900;
+  font-display:swap;
+  src:url("fonts/orbitron-latin.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
 :root{
   --bg:#050816;
   --panel:rgba(11,17,36,.74);
@@ -73,6 +91,22 @@ a:focus-visible,button:focus-visible{
 
 .profile{text-align:center}
 
+@keyframes fade-up{
+  from{opacity:0;transform:translateY(14px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.profile,.featured,.section{
+  animation:fade-up .6s ease both;
+}
+
+.profile{animation-delay:0s}
+.featured{animation-delay:.08s}
+.section:nth-of-type(2){animation-delay:.16s}
+.section:nth-of-type(3){animation-delay:.22s}
+.section:nth-of-type(4){animation-delay:.28s}
+footer{animation:fade-up .6s ease .34s both}
+
 .avatar-wrap{
   width:116px;
   height:116px;
@@ -110,6 +144,12 @@ a:focus-visible,button:focus-visible{
   right:-2px;
   bottom:6px;
   box-shadow:0 0 20px rgba(63,245,139,.6);
+  animation:pulse-glow 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-glow{
+  0%,100%{box-shadow:0 0 20px rgba(63,245,139,.6)}
+  50%{box-shadow:0 0 30px rgba(63,245,139,.95)}
 }
 
 .eyebrow,.kicker{
@@ -160,6 +200,30 @@ h1{
   font-size:11px;
   font-weight:700;
 }
+
+.share-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin:0 0 8px;
+  padding:9px 16px;
+  border-radius:999px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line);
+  color:var(--text);
+  font:inherit;
+  font-size:12px;
+  font-weight:700;
+  cursor:pointer;
+  transition:.2s ease;
+}
+
+.share-btn:hover{
+  border-color:rgba(100,187,255,.45);
+  background:rgba(255,255,255,.07);
+}
+
+.share-btn .share-icon{font-size:14px}
 
 .featured{
   display:grid;
