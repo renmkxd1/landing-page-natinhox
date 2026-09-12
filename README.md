@@ -11,7 +11,8 @@ Página estática pronta para substituir o Linktree.
 - `script.js`
 - `favicon.svg`
 - `avatar-natinhox.png`
-- `manifest.json` — permite "Adicionar à tela inicial" (PWA) no Android/Chrome
+- `manifest.json` — permite "Adicionar à tela inicial" (PWA) no Android/Chrome/iOS
+- `icons/` — apple-touch-icon.png (180×180) e ícones PNG do manifest (192/512), gerados a partir do `favicon.svg`
 - `fonts/` — Inter e Orbitron auto-hospedadas (sem dependência do Google Fonts)
 - `robots.txt` / `sitemap.xml` — SEO técnico
 
@@ -63,9 +64,7 @@ referências (`https://renmkxd1.github.io/landing-page-natinhox/` → seu domín
   Meta Pixel ou solução própria.
 - O botão "Compartilhar perfil" usa a Web Share API nativa (mobile) e cai
   para copiar o link via clipboard em navegadores desktop.
-- O `manifest.json` usa `favicon.svg` como ícone. Isso funciona para
-  "Adicionar à tela inicial" no Android/Chrome, mas o iOS/Safari exige um
-  PNG dedicado (`apple-touch-icon`, 180×180) que ainda não foi gerado —
-  se quiser esse suporte no iPhone, gere um PNG a partir do `favicon.svg`
-  e adicione `<link rel="apple-touch-icon" href="apple-touch-icon.png">`
-  no `<head>`.
+- "Adicionar à tela inicial" funciona tanto no Android/Chrome (via
+  `manifest.json` + ícones PNG) quanto no iOS/Safari (via
+  `icons/apple-touch-icon.png`, 180×180). Se trocar o logo, regenere os
+  três PNGs em `icons/` a partir do novo `favicon.svg`.
