@@ -289,6 +289,7 @@ h1{
 
 .twitch{background:linear-gradient(135deg,#5934b7,#31166d)}
 .kick{background:linear-gradient(135deg,#16391e,#0d2012)}
+.tiktok{background:linear-gradient(135deg,#1f1f33,#0d0d17)}
 
 .live-badge{
   display:none;
@@ -706,12 +707,13 @@ h1{font-size:clamp(32px,7vw,48px)}
 .quick-nav a{flex:1;min-width:0;border:0;background:transparent;border-radius:12px;padding:10px 8px;font-weight:700;color:#b9c9e8}
 .quick-nav a:hover,.quick-nav a:focus-visible{background:rgba(62,231,255,.1);color:var(--cyan)}
 section[id]{scroll-margin-top:88px}
-.featured{grid-template-columns:1.2fr 1fr}
+.featured{grid-template-columns:1.15fr 1fr 1fr}
 .featured-card{min-height:150px;padding:28px 22px;border-radius:20px;gap:12px}
 .featured-card>div{min-width:0}
 .twitch{padding-top:40px;background:radial-gradient(ellipse at 100% 0%,#9253db55,transparent 70%),linear-gradient(135deg,#6035bd,#31166d);border-color:#a881ed66}
 .kick{padding-top:40px}
 .kick .kicker{color:#a8e7ad}
+.tiktok .kicker{color:#7de8e3}
 .featured-card .kicker{font-size:9px;letter-spacing:.11em}
 .featured-card strong{font-size:20px}
 .featured-card small{font-size:12px;color:#d7d9e9}

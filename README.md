@@ -81,6 +81,9 @@ que estiver sendo servido no momento.
   canais — sem precisar clicar em nada — junto com o número de espectadores
   em tempo real. Cada plataforma tem seu próprio card, selo "AO VIVO",
   contagem de seguidores e player, checados de forma independente.
+- **Cards principais (topo)**: Twitch, Kick e TikTok lado a lado (empilhados
+  no celular) logo após o perfil — os três canais que mais importam ficam
+  visíveis sem rolar a página, antes mesmo da seção "Continue comigo".
 - **Graciosa Roleplay** — banner dourado depois das redes sociais, com a
   logo oficial (`graciosa-logo.png`), badge "PARCEIRO OFICIAL" e botões para
   Discord/Instagram da cidade.
@@ -88,7 +91,7 @@ que estiver sendo servido no momento.
   (`apoie-natinhox.png`) e CTA "Doar via LivePix".
 - **Parcerias**: convite direto com botão de contato pelo Discord, substituindo os espaços vazios de marcas.
 - **Navegação**: topo compacto e atalhos que permanecem visíveis durante a rolagem. Canais primeiro, comunidade e redes em seguida, depois parceiro, apoio e projetos.
-- **Redes**: Discord em destaque; demais redes em duas colunas no desktop e uma no celular, com descrições completas.
+- **Redes**: Discord em destaque; demais redes (exceto TikTok, que subiu para os cards principais) em duas colunas no desktop e uma no celular, com descrições completas.
 - **Compartilhamento**: disponível no rodapé, com os mesmos recursos de cópia e
   compartilhamento nativo, e uma pequena celebração animada (confete) quando o
   link é compartilhado ou copiado com sucesso — desativada automaticamente se
