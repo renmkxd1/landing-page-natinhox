@@ -17,8 +17,8 @@ if (year) year.textContent = new Date().getFullYear();
       : state === "offline" ? "Offline agora \u00b7 veja as lives anteriores" : "Confira as lives no canal";
   }
 
-  async function check() {
-    if (pending || document.hidden) return;
+  async function check({ skipIfHidden = false } = {}) {
+    if (pending || (skipIfHidden && document.hidden)) return;
     pending = true;
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 8000);
@@ -40,7 +40,7 @@ if (year) year.textContent = new Date().getFullYear();
   }
 
   check();
-  setInterval(check, 60000);
+  setInterval(() => check({ skipIfHidden: true }), 60000);
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) render("unknown");
     else check();
