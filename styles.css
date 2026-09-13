@@ -642,6 +642,7 @@ section[id]{scroll-margin-top:24px}
 .share-fallback input{width:100%;padding:12px;color:var(--text);background:var(--bg);border:1px solid var(--cyan);border-radius:10px;font:inherit;font-size:13px}
 .share-fallback input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 #liveStatus{display:block;margin-top:8px;color:#d9c9ff;font-size:11px}
+.live-game{display:block;margin-top:4px;color:#ffd166;font-size:11px;font-weight:700}
 .follower-count,.community-count{opacity:0;transition:opacity .4s ease}
 .follower-count.is-in,.community-count.is-in{opacity:1}
 .follower-count{display:block;margin-top:4px;color:#bcd0ff;font-size:11px;font-weight:700}

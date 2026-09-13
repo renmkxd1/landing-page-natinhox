@@ -122,6 +122,10 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   número de seguidores da Twitch, exibido abaixo do status no card ("X
   seguidores na Twitch"). Não cobre a Kick (a API pública da Kick bloqueia
   chamadas de outros domínios via CORS).
+- Quando a live está ativa, o jogo atual (`decapi.me/twitch/game/natinhox`)
+  aparece no card da Twitch ("🎮 Jogando GTA V"), atualizado junto com o
+  status a cada 60 segundos. Some automaticamente quando a live termina ou a
+  consulta falha.
 - Quando o status acima detecta a live ativa, o player oficial da Twitch
   (`player.twitch.tv`) é carregado embutido logo abaixo dos cards de canais,
   silenciado por padrão — quem chega na página já assiste sem precisar clicar

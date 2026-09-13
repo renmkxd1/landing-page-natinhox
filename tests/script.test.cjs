@@ -6,9 +6,9 @@ const source = fs.readFileSync(require('node:path').join(__dirname, '../script.j
 
 async function setup({ body = 'natinhox is offline', ok = true, networkError = false, navigator = {},
   followBody = '246', followOk = true, discordBody = { approximate_member_count: 79, approximate_presence_count: 15 }, discordOk = true,
-  viewerBody = '1234', visited = false, reducedMotion = false } = {}) {
+  viewerBody = '1234', gameBody = 'GTA V', gameOk = true, visited = false, reducedMotion = false } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
+  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
     elements.set(id, { hidden: true, textContent: '', src: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
@@ -33,6 +33,9 @@ async function setup({ body = 'natinhox is offline', ok = true, networkError = f
       }
       if (typeof url === 'string' && url.includes('viewercount')) {
         return { ok: true, text: async () => viewerBody };
+      }
+      if (typeof url === 'string' && url.includes('/game/')) {
+        return { ok: gameOk, text: async () => gameBody };
       }
       if (typeof url === 'string' && url.includes('discord.com')) {
         return { ok: discordOk, json: async () => discordBody };
@@ -76,6 +79,23 @@ for (const options of [{ body: 'natinhox is offline' }, { networkError: true }])
   test(`viewer count stays empty when offline: ${JSON.stringify(options)}`, async () => {
     const { elements } = await setup(options);
     assert.equal(elements.get('liveViewerCount').textContent, '');
+  });
+}
+test('current game is shown while live', async () => {
+  const { elements } = await setup({ body: '1 hour, 2 minutes', gameBody: 'GTA V' });
+  assert.equal(elements.get('liveGame').hidden, false);
+  assert.equal(elements.get('liveGame').textContent, '🎮 Jogando GTA V');
+});
+for (const options of [{ gameBody: 'natinhox is offline' }, { gameBody: '' }, { gameOk: false }]) {
+  test(`current game stays hidden with bad response: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup({ body: '1 hour, 2 minutes', ...options });
+    assert.equal(elements.get('liveGame').hidden, true);
+  });
+}
+for (const options of [{ body: 'natinhox is offline' }, { networkError: true }]) {
+  test(`current game stays hidden when offline: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('liveGame').hidden, true);
   });
 }
 test('greeting personalizes for a first-time visitor and marks them as visited', async () => {

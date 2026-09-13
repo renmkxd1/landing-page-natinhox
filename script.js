@@ -54,8 +54,22 @@ function celebrate(originEl) {
   const embedWrap = document.getElementById("liveEmbed");
   const embedFrame = document.getElementById("liveEmbedFrame");
   const viewerCount = document.getElementById("liveViewerCount");
+  const gameEl = document.getElementById("liveGame");
   if (!dot && !badge && !status) return;
   let pending = false;
+
+  function updateGame() {
+    if (!gameEl) return;
+    fetch("https://decapi.me/twitch/game/natinhox", { cache: "no-store" })
+      .then(response => response.ok ? response.text() : Promise.reject())
+      .then(text => {
+        const game = text.trim();
+        if (!game || /^natinhox is offline\.?$/i.test(game)) { gameEl.hidden = true; return; }
+        gameEl.textContent = `🎮 Jogando ${game}`;
+        gameEl.hidden = false;
+      })
+      .catch(() => { gameEl.hidden = true; });
+  }
 
   function updateViewerCount() {
     if (!viewerCount) return;
@@ -86,8 +100,13 @@ function celebrate(originEl) {
       }
       embedWrap.hidden = !live;
     }
-    if (live) updateViewerCount();
-    else if (viewerCount) viewerCount.textContent = "";
+    if (live) {
+      updateViewerCount();
+      updateGame();
+    } else {
+      if (viewerCount) viewerCount.textContent = "";
+      if (gameEl) gameEl.hidden = true;
+    }
   }
 
   async function check({ skipIfHidden = false } = {}) {
