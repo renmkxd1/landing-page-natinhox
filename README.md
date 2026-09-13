@@ -176,7 +176,9 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   animações de pseudoelementos.
 
 ## Verificação local
-Requer Node.js para os testes (nenhuma dependência adicional):
+A suíte também roda sozinha no GitHub Actions (`.github/workflows/tests.yml`)
+a cada push/PR na `main`, sem depender de rodar manualmente antes de subir
+uma mudança. Requer Node.js para os testes (nenhuma dependência adicional):
 
 ```bash
 node --test tests/script.test.cjs
