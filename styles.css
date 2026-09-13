@@ -642,7 +642,26 @@ section[id]{scroll-margin-top:24px}
 .share-fallback input{width:100%;padding:12px;color:var(--text);background:var(--bg);border:1px solid var(--cyan);border-radius:10px;font:inherit;font-size:13px}
 .share-fallback input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 #liveStatus{display:block;margin-top:8px;color:#d9c9ff;font-size:11px}
+.follower-count,.community-count{opacity:0;transition:opacity .4s ease}
+.follower-count.is-in,.community-count.is-in{opacity:1}
 .follower-count{display:block;margin-top:4px;color:#bcd0ff;font-size:11px;font-weight:700}
+.community-count{display:inline-flex;align-items:center;gap:6px;margin:0 0 14px;color:var(--gold-soft);font-size:11px;font-weight:800;letter-spacing:.02em;position:relative;z-index:2}
+.community-count::before{content:"";width:7px;height:7px;border-radius:50%;background:#3ff58b;box-shadow:0 0 8px rgba(63,245,139,.7)}
+
+.faq-list{display:flex;flex-direction:column;gap:10px}
+.faq-item{border:1px solid var(--line);border-radius:16px;padding:0 16px;background:linear-gradient(180deg,rgba(14,22,45,.82),rgba(8,14,31,.82));transition:.25s ease}
+.faq-item[open]{border-color:rgba(100,187,255,.45)}
+.faq-item summary{cursor:pointer;list-style:none;padding:14px 4px;font-weight:700;font-size:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;min-height:44px}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary::after{content:"+";font-size:18px;line-height:1;color:var(--cyan);transition:transform .25s ease;flex:0 0 auto}
+.faq-item[open] summary::after{transform:rotate(45deg)}
+.faq-item summary:focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:12px}
+.faq-item p{margin:0 4px 16px;color:var(--muted);font-size:13px;line-height:1.6}
+
+.back-to-top{position:fixed;right:18px;bottom:18px;z-index:6;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--panel-2);border:1px solid var(--line);color:var(--cyan);font-size:20px;box-shadow:0 10px 30px rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease}
+.back-to-top.is-visible{opacity:1;pointer-events:auto}
+.back-to-top:hover{transform:translateY(-3px);border-color:var(--cyan)}
+@media(max-width:600px){.back-to-top{right:14px;bottom:14px;width:42px;height:42px;font-size:18px}}
 .twitch{padding-top:44px}
 .spotlight-actions a{min-height:44px;display:inline-flex;align-items:center}
 .section-title h2{color:#94a3c7}

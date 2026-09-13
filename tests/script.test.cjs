@@ -4,19 +4,23 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const source = fs.readFileSync(require('node:path').join(__dirname, '../script.js'), 'utf8');
 
-async function setup({ body = 'natinhox is offline', ok = true, networkError = false, navigator = {}, followBody = '246', followOk = true } = {}) {
+async function setup({ body = 'natinhox is offline', ok = true, networkError = false, navigator = {},
+  followBody = '246', followOk = true, discordBody = { approximate_member_count: 79, approximate_presence_count: 15 }, discordOk = true } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'followerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
-    elements.set(id, { hidden: true, textContent: '', classList: { toggle(name, value) { this[name] = value; } },
+  for (const id of ['year', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'followerCount', 'graciosaCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
+    elements.set(id, { hidden: true, textContent: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
   let interval;
   const document = { hidden: false, getElementById: id => elements.get(id), querySelector: () => ({ href: 'https://example.com/profile/' }), addEventListener() {} };
   vm.runInNewContext(source, { document, navigator, location: { href: 'https://example.com/?private=1#section' }, Date, AbortController,
-    setTimeout, clearTimeout, setInterval: fn => { interval = fn; },
+    setTimeout, clearTimeout, setInterval: fn => { interval = fn; }, requestAnimationFrame: fn => fn(),
     fetch: async url => {
       if (typeof url === 'string' && url.includes('followcount')) {
         return { ok: followOk, text: async () => followBody };
+      }
+      if (typeof url === 'string' && url.includes('discord.com')) {
+        return { ok: discordOk, json: async () => discordBody };
       }
       if (networkError) throw Error('network');
       return { ok, text: async () => body };
@@ -41,11 +45,27 @@ test('valid follower count is shown', async () => {
   const { elements } = await setup({ followBody: '1234' });
   assert.equal(elements.get('followerCount').hidden, false);
   assert.equal(elements.get('followerCount').textContent, '1.234 seguidores na Twitch');
+  assert.equal(elements.get('followerCount').classList['is-in'], true);
 });
 for (const options of [{ followBody: 'Rate limit exceeded' }, { followBody: '-3' }, { followBody: '12.5' }, { followBody: '', followOk: false }]) {
   test(`invalid follower count stays hidden: ${JSON.stringify(options)}`, async () => {
     const { elements } = await setup(options);
     assert.equal(elements.get('followerCount').hidden, true);
+  });
+}
+test('valid Graciosa community count is shown', async () => {
+  const { elements } = await setup({ discordBody: { approximate_member_count: 79, approximate_presence_count: 15 } });
+  assert.equal(elements.get('graciosaCount').hidden, false);
+  assert.equal(elements.get('graciosaCount').textContent, '79 membros · 15 online');
+});
+for (const options of [
+  { discordBody: { approximate_member_count: -1, approximate_presence_count: 2 } },
+  { discordBody: { approximate_member_count: 79 } },
+  { discordBody: {}, discordOk: false }
+]) {
+  test(`invalid Graciosa community count stays hidden: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('graciosaCount').hidden, true);
   });
 }
 test('clipboard receives canonical URL', async () => {

@@ -78,6 +78,9 @@ referências (`https://renmkxd1.github.io/landing-page-natinhox/` → seu domín
 - **Navegação**: topo compacto e atalhos que permanecem visíveis durante a rolagem. Canais primeiro, comunidade e redes em seguida, depois parceiro, apoio e projetos.
 - **Redes**: Discord em destaque; demais redes em duas colunas no desktop e uma no celular, com descrições completas.
 - **Compartilhamento**: disponível no rodapé, com os mesmos recursos de cópia e compartilhamento nativo.
+- **Perguntas frequentes**: seção em acordeão (`<details>`/`<summary>`, sem JS) antes do
+  rodapé, com atalho próprio na navegação rápida. As respostas também aparecem como
+  `FAQPage` no JSON-LD do `<head>` para aparecer em resultados de busca do Google.
 
 ## Ícones de plataforma
 Os ícones de TikTok, YouTube, Instagram, Discord e Twitch/Kick são SVGs
@@ -104,13 +107,21 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   `decapi.me` (serviço público e gratuito, sem login/token) para saber se o
   canal `natinhox` está ao vivo na Twitch. O mesmo serviço também informa o
   número de seguidores da Twitch, exibido abaixo do status no card ("X
-  seguidores na Twitch"). Além do analytics, são as únicas consultas externas
-  que o site faz — se o serviço cair, os indicadores simplesmente somem/mantêm
-  o estado anterior, sem quebrar a página. Não cobre a Kick (a API pública da
-  Kick bloqueia chamadas de outros domínios via CORS).
+  seguidores na Twitch"). Não cobre a Kick (a API pública da Kick bloqueia
+  chamadas de outros domínios via CORS).
+- O banner da Graciosa Roleplay mostra membros e pessoas online em tempo real
+  (ex.: "79 membros · 15 online"), via API pública e sem autenticação do
+  Discord (`discord.com/api/v10/invites/<código>?with_counts=true`, mesmo
+  código do convite usado no botão "Entrar no Discord"). Se o convite expirar
+  ou o serviço falhar, o número simplesmente não aparece. São as únicas
+  consultas externas que o site faz, além do analytics — todas falham em
+  silêncio, sem quebrar a página.
 
 ## Melhorias de navegação e confiabilidade
-- Atalhos para Lives, Redes, Apoie e Parcerias, com acesso por teclado.
+- Atalhos para Lives, Redes, Graciosa RP, Apoie, Parcerias e FAQ, com acesso por teclado.
+- Botão "Voltar ao topo" (canto inferior direito) aparece depois de rolar a página;
+  usa `href="#top"` como link real (funciona sem JavaScript) e o JS (`effects.js`)
+  só controla quando ele fica visível.
 - Status Twitch atualizado a cada 60 segundos enquanto a página está visível,
   com limite de 8 segundos por consulta. Apenas uma duração válida ativa o selo;
   erros HTTP, falhas de rede e respostas desconhecidas usam texto neutro.

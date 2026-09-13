@@ -31,6 +31,7 @@
   <link rel="preload" href="avatar-natinhox.webp" as="image" type="image/webp" />
   <link rel="preconnect" href="https://decapi.me" />
   <link rel="preconnect" href="https://gc.zgo.at" />
+  <link rel="preconnect" href="https://discord.com" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="premium.css" />
   <script type="application/ld+json">
@@ -75,13 +76,23 @@
           { "@type": "ListItem", "position": 7, "name": "LivePix", "url": "https://www.livepix.gg/natinhox" },
           { "@type": "ListItem", "position": 8, "name": "Kwai", "url": "https://k.kwai.com/u/@Natinhox/GyCMK8mJ" }
         ]
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          { "@type": "Question", "name": "Quando você faz live?", "acceptedAnswer": { "@type": "Answer", "text": "Não sigo uma grade fixa, mas ative as notificações do canal na Twitch para saber assim que eu entrar ao vivo." } },
+          { "@type": "Question", "name": "Quais jogos você mais joga?", "acceptedAnswer": { "@type": "Answer", "text": "GTA RP na Graciosa Roleplay e Valorant são os principais, mas também apareço em outros títulos e nos cortes." } },
+          { "@type": "Question", "name": "Como entro na Graciosa Roleplay?", "acceptedAnswer": { "@type": "Answer", "text": "Entre no Discord da cidade pelo botão da seção Graciosa RP, leia as regras e crie seu personagem." } },
+          { "@type": "Question", "name": "Como posso apoiar o canal?", "acceptedAnswer": { "@type": "Answer", "text": "Via LivePix na seção Apoie o NATINHOX, durante a live, ou seguindo e compartilhando os canais com a galera." } },
+          { "@type": "Question", "name": "Quero fazer parceria ou patrocínio, como falo com você?", "acceptedAnswer": { "@type": "Answer", "text": "Entre em contato pelo Discord oficial, direto na seção Parcerias da página." } }
+        ]
       }
     ]
   }
   </script>
 </head>
 
-<body>
+<body id="top">
   <a class="skip-link" href="#lives">Pular para os canais</a>
   <div class="bg-grid"></div>
   <div class="orb orb-one"></div>
@@ -123,6 +134,7 @@
         <a href="#graciosa">Graciosa RP</a>
         <a href="#apoie">Apoie</a>
         <a href="#parcerias">Parcerias</a>
+        <a href="#faq">FAQ</a>
       </nav>
 
     <section class="featured" id="lives" tabindex="-1" aria-label="Canais de transmissão">
@@ -207,6 +219,7 @@
     <section class="spotlight" id="graciosa" tabindex="-1" aria-labelledby="graciosaTitle">
       <div class="spotlight-glow" aria-hidden="true"></div>
       <span class="spotlight-badge">PARCEIRO OFICIAL</span>
+      <span class="community-count" id="graciosaCount" hidden></span>
       <div class="spotlight-body">
         <picture>
           <source srcset="graciosa-logo.webp" type="image/webp" />
@@ -266,6 +279,35 @@
       <a class="partnership-cta" href="https://discord.gg/thczBVge" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Sponsors - Discord">Conversar sobre parceria <span aria-hidden="true">↗</span></a>
     </section>
 
+    <section class="section faq" id="faq" tabindex="-1" aria-labelledby="faqTitle">
+      <div class="section-title">
+        <h2 id="faqTitle">Perguntas frequentes</h2>
+        <i></i>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item">
+          <summary>Quando você faz live?</summary>
+          <p>Não sigo uma grade fixa, mas ative as notificações do canal na Twitch para saber assim que eu entrar ao vivo.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Quais jogos você mais joga?</summary>
+          <p>GTA RP na Graciosa Roleplay e Valorant são os principais, mas também apareço em outros títulos e nos cortes.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Como entro na Graciosa Roleplay?</summary>
+          <p>Entre no Discord da cidade pelo botão da seção Graciosa RP, leia as regras e crie seu personagem.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Como posso apoiar o canal?</summary>
+          <p>Via LivePix na seção Apoie o NATINHOX, durante a live, ou seguindo e compartilhando meus canais com a galera.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Quero fazer parceria ou patrocínio, como falo com você?</summary>
+          <p>Entre em contato pelo Discord oficial, direto na seção Parcerias aqui da página.</p>
+        </details>
+      </div>
+    </section>
+
     <footer>
       <button type="button" class="share-btn" id="shareBtn" hidden data-goatcounter-click="Compartilhar perfil">
         <span class="share-icon" aria-hidden="true">↗</span>
@@ -281,6 +323,8 @@
       <p>© <span id="year">2026</span> • Todos os direitos reservados.</p>
     </footer>
   </main>
+
+  <a href="#top" class="back-to-top" id="backToTop" hidden aria-label="Voltar ao topo">↑</a>
 
   <script data-goatcounter="https://natinhox.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script src="script.js"></script>

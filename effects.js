@@ -79,4 +79,12 @@
   window.addEventListener('scroll', scheduleNavigation, { passive: true });
   window.addEventListener('resize', scheduleNavigation);
   updateNavigation();
+
+  const backToTop = document.getElementById('backToTop');
+  if (backToTop) {
+    backToTop.hidden = false;
+    const toggleBackToTop = () => backToTop.classList.toggle('is-visible', window.scrollY > 480);
+    window.addEventListener('scroll', toggleBackToTop, { passive: true });
+    toggleBackToTop();
+  }
 })();

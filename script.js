@@ -47,6 +47,12 @@ if (year) year.textContent = new Date().getFullYear();
   });
 })();
 
+function revealBadge(el, text) {
+  el.textContent = text;
+  el.hidden = false;
+  requestAnimationFrame(() => el.classList.add("is-in"));
+}
+
 (function loadFollowerCount() {
   const el = document.getElementById("followerCount");
   if (!el) return;
@@ -55,8 +61,21 @@ if (year) year.textContent = new Date().getFullYear();
     .then(text => {
       const count = Number(text.trim());
       if (!Number.isInteger(count) || count < 0) return;
-      el.textContent = `${count.toLocaleString("pt-BR")} seguidores na Twitch`;
-      el.hidden = false;
+      revealBadge(el, `${count.toLocaleString("pt-BR")} seguidores na Twitch`);
+    })
+    .catch(() => {});
+})();
+
+(function loadGraciosaCommunityCount() {
+  const el = document.getElementById("graciosaCount");
+  if (!el) return;
+  fetch("https://discord.com/api/v10/invites/KwWGzyrzhn?with_counts=true", { cache: "no-store" })
+    .then(response => response.ok ? response.json() : Promise.reject())
+    .then(data => {
+      const members = data.approximate_member_count;
+      const online = data.approximate_presence_count;
+      if (!Number.isInteger(members) || !Number.isInteger(online) || members < 0 || online < 0) return;
+      revealBadge(el, `${members.toLocaleString("pt-BR")} membros · ${online.toLocaleString("pt-BR")} online`);
     })
     .catch(() => {});
 })();
