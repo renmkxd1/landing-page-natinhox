@@ -7,13 +7,13 @@ const source = fs.readFileSync(require('node:path').join(__dirname, '../script.j
 async function setup({ body = 'natinhox is offline', ok = true, networkError = false, navigator = {},
   followBody = '246', followOk = true, discordBody = { approximate_member_count: 79, approximate_presence_count: 15 }, discordOk = true } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'followerCount', 'graciosaCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
-    elements.set(id, { hidden: true, textContent: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
+  for (const id of ['year', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
+    elements.set(id, { hidden: true, textContent: '', src: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
   let interval;
   const document = { hidden: false, getElementById: id => elements.get(id), querySelector: () => ({ href: 'https://example.com/profile/' }), addEventListener() {} };
-  vm.runInNewContext(source, { document, navigator, location: { href: 'https://example.com/?private=1#section' }, Date, AbortController,
+  vm.runInNewContext(source, { document, navigator, location: { href: 'https://example.com/?private=1#section', hostname: 'example.com' }, Date, AbortController,
     setTimeout, clearTimeout, setInterval: fn => { interval = fn; }, requestAnimationFrame: fn => fn(),
     fetch: async url => {
       if (typeof url === 'string' && url.includes('followcount')) {
@@ -39,6 +39,18 @@ for (const options of [{ body: 'natinhox is offline' }, { body: 'Rate limit exce
   test(`never false live: ${JSON.stringify(options)}`, async () => {
     const { elements } = await setup(options);
     assert.equal(elements.get('twitchLiveBadge').classList.show, false);
+  });
+}
+test('live embed loads and shows when live', async () => {
+  const { elements } = await setup({ body: '1 hour, 2 minutes' });
+  assert.equal(elements.get('liveEmbed').hidden, false);
+  assert.equal(elements.get('liveEmbedFrame').src, 'https://player.twitch.tv/?channel=natinhox&parent=example.com&muted=true');
+});
+for (const options of [{ body: 'natinhox is offline' }, { networkError: true }]) {
+  test(`live embed stays hidden and unloaded: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('liveEmbed').hidden, true);
+    assert.equal(elements.get('liveEmbedFrame').src, '');
   });
 }
 test('valid follower count is shown', async () => {

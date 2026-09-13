@@ -5,6 +5,8 @@ if (year) year.textContent = new Date().getFullYear();
   const dot = document.getElementById("statusDot");
   const badge = document.getElementById("twitchLiveBadge");
   const status = document.getElementById("liveStatus");
+  const embedWrap = document.getElementById("liveEmbed");
+  const embedFrame = document.getElementById("liveEmbedFrame");
   if (!dot && !badge && !status) return;
   let pending = false;
 
@@ -15,6 +17,15 @@ if (year) year.textContent = new Date().getFullYear();
     if (status) status.textContent = live
       ? "Ao vivo agora na Twitch"
       : state === "offline" ? "Offline agora \u00b7 veja as lives anteriores" : "Confira as lives no canal";
+    if (embedWrap && embedFrame) {
+      if (live && !embedFrame.src) {
+        const parent = encodeURIComponent(location.hostname || "renmkxd1.github.io");
+        embedFrame.src = `https://player.twitch.tv/?channel=natinhox&parent=${parent}&muted=true`;
+      } else if (!live && embedFrame.src) {
+        embedFrame.src = "";
+      }
+      embedWrap.hidden = !live;
+    }
   }
 
   async function check({ skipIfHidden = false } = {}) {

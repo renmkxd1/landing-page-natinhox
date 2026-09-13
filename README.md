@@ -54,6 +54,9 @@ As tags `og:url`, `og:image`, `twitter:image`, `<link rel="canonical">`, o
 JSON-LD no `<head>` e o `Sitemap:` em `robots.txt`/`sitemap.xml` usam a URL
 absoluta do GitHub Pages. Se registrar um domínio próprio, atualize essas
 referências (`https://renmkxd1.github.io/landing-page-natinhox/` → seu domínio).
+O player embutido da Twitch (ao vivo) não precisa de ajuste manual — ele lê
+o domínio automaticamente (`location.hostname`) — mas só funciona no domínio
+que estiver sendo servido no momento.
 
 ## Links configurados
 - Twitch: https://www.twitch.tv/natinhox
@@ -69,6 +72,8 @@ referências (`https://renmkxd1.github.io/landing-page-natinhox/` → seu domín
 - Marvia System: https://www.marviasistem.com.br/
 
 ## Seções em destaque
+- **Player ao vivo**: quando o NATINHOX está transmitindo, a live da Twitch
+  aparece embutida logo abaixo dos cards de canais — sem precisar clicar em nada.
 - **Graciosa Roleplay** — banner dourado depois das redes sociais, com a
   logo oficial (`graciosa-logo.png`), badge "PARCEIRO OFICIAL" e botões para
   Discord/Instagram da cidade.
@@ -109,6 +114,15 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   número de seguidores da Twitch, exibido abaixo do status no card ("X
   seguidores na Twitch"). Não cobre a Kick (a API pública da Kick bloqueia
   chamadas de outros domínios via CORS).
+- Quando o status acima detecta a live ativa, o player oficial da Twitch
+  (`player.twitch.tv`) é carregado embutido logo abaixo dos cards de canais,
+  silenciado por padrão — quem chega na página já assiste sem precisar clicar
+  em nada. O player usa o parâmetro `parent` com o domínio atual da página
+  (`location.hostname`); **se o site for movido para outro domínio, o embed
+  simplesmente não carrega até você atualizar isso** (veja "Se for trocar de
+  domínio" acima — o mesmo cuidado se aplica aqui). O iframe só é criado
+  quando a live é confirmada e é removido assim que ela termina ou a aba
+  fica em segundo plano, para não gastar dados à toa.
 - O banner da Graciosa Roleplay mostra membros e pessoas online em tempo real
   (ex.: "79 membros · 15 online"), via API pública e sem autenticação do
   Discord (`discord.com/api/v10/invites/<código>?with_counts=true`, mesmo
