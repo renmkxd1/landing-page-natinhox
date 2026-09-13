@@ -69,15 +69,15 @@ referências (`https://renmkxd1.github.io/landing-page-natinhox/` → seu domín
 - Marvia System: https://www.marviasistem.com.br/
 
 ## Seções em destaque
-- **Graciosa Roleplay** — banner dourado logo abaixo da Twitch/Kick, com a
+- **Graciosa Roleplay** — banner dourado depois das redes sociais, com a
   logo oficial (`graciosa-logo.png`), badge "PARCEIRO OFICIAL" e botões para
   Discord/Instagram da cidade.
 - **Apoie o NATINHOX** — banner com a arte de doação/LivePix
   (`apoie-natinhox.png`) e CTA "Doar via LivePix".
-- **Patrocinadores** — seção com aviso de que aceito parcerias/patrocínios e
-  3 espaços vazios (`sponsor-slot`) reservados para logos de marcas
-  parceiras. Para preencher um espaço, troque o `<div class="sponsor-slot">`
-  correspondente em `index.html` por um `<a>` com a logo do patrocinador.
+- **Parcerias**: convite direto com botão de contato pelo Discord, substituindo os espaços vazios de marcas.
+- **Navegação**: topo compacto e atalhos que permanecem visíveis durante a rolagem. Canais primeiro, comunidade e redes em seguida, depois parceiro, apoio e projetos.
+- **Redes**: Discord em destaque; demais redes em duas colunas no desktop e uma no celular, com descrições completas.
+- **Compartilhamento**: disponível no rodapé, com os mesmos recursos de cópia e compartilhamento nativo.
 
 ## Ícones de plataforma
 Os ícones de TikTok, YouTube, Instagram, Discord e Twitch/Kick são SVGs
@@ -102,7 +102,41 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   três PNGs em `icons/` a partir do novo `favicon.svg`.
 - O indicador "AO VIVO" (bolinha do avatar + selo no card da Twitch) consulta
   `decapi.me` (serviço público e gratuito, sem login/token) para saber se o
-  canal `natinhox` está ao vivo na Twitch. É a única chamada externa que o
+  canal `natinhox` está ao vivo na Twitch. Além do analytics, é a consulta externa que o
   site faz — se o serviço cair, o indicador simplesmente some/mantém o
   estado "offline", sem quebrar a página. Não cobre a Kick (a API pública da
   Kick bloqueia chamadas de outros domínios via CORS).
+
+## Melhorias de navegação e confiabilidade
+- Atalhos para Lives, Redes, Apoie e Parcerias, com acesso por teclado.
+- Status Twitch atualizado a cada 60 segundos enquanto a página está visível,
+  com limite de 8 segundos por consulta. Apenas uma duração válida ativa o selo;
+  erros HTTP, falhas de rede e respostas desconhecidas usam texto neutro.
+- Compartilhamento usa a URL canônica, sem parâmetros ou âncoras. Se a opção
+  nativa falhar, tenta copiar; se a cópia falhar, exibe um campo selecionável.
+  Cancelar o compartilhamento nativo encerra a ação normalmente.
+- Feedback acessível, alvos de toque maiores e movimento reduzido também nas
+  animações de pseudoelementos.
+
+## Verificação local
+Requer Node.js para os testes (nenhuma dependência adicional):
+
+```bash
+node --test tests/script.test.cjs
+```
+
+Para abrir a página via HTTP, na pasta do projeto:
+
+```bash
+python -m http.server 4173 --bind 127.0.0.1
+```
+
+Acesse http://127.0.0.1:4173. Os testes cobrem respostas da Twitch e caminhos
+alternativos do compartilhamento; não comprovam disponibilidade dos perfis externos.
+## Acabamento premium
+- `premium.css`: painel de perfil, acabamento dos cards, luz ambiente e ajustes responsivos.
+- `effects.js`: luz seguindo o cursor em dispositivos com mouse, entrada suave das
+  seções e indicação da seção atual no menu. Sem bibliotecas adicionais.
+- O botão no topo permite pausar os efeitos. A preferência de movimento reduzido
+  do dispositivo é respeitada automaticamente. O conteúdo permanece visível sem JavaScript.
+- Ao publicar, envie também `premium.css` e `effects.js` junto aos arquivos existentes.

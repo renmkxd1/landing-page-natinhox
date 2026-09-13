@@ -1,46 +1,91 @@
-document.getElementById("year").textContent = new Date().getFullYear();
+﻿const year = document.getElementById("year");
+if (year) year.textContent = new Date().getFullYear();
 
-(function checkTwitchLive() {
+(function watchTwitchLive() {
   const dot = document.getElementById("statusDot");
   const badge = document.getElementById("twitchLiveBadge");
-  if (!dot && !badge) return;
+  const status = document.getElementById("liveStatus");
+  if (!dot && !badge && !status) return;
+  let pending = false;
 
-  fetch("https://decapi.me/twitch/uptime/natinhox", { cache: "no-store" })
-    .then(res => res.text())
-    .then(text => {
-      const isLive = !/offline/i.test(text.trim());
-      if (dot) dot.classList.toggle("is-live", isLive);
-      if (badge) badge.classList.toggle("show", isLive);
-    })
-    .catch(() => {});
+  function render(state) {
+    const live = state === "live";
+    dot?.classList.toggle("is-live", live);
+    badge?.classList.toggle("show", live);
+    if (status) status.textContent = live
+      ? "Ao vivo agora na Twitch"
+      : state === "offline" ? "Offline agora \u00b7 veja as lives anteriores" : "Confira as lives no canal";
+  }
+
+  async function check() {
+    if (pending || document.hidden) return;
+    pending = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch("https://decapi.me/twitch/uptime/natinhox", {
+        cache: "no-store", signal: controller.signal
+      });
+      if (!response.ok) throw new Error("Status unavailable");
+      const text = (await response.text()).trim();
+      // Only a duration is positive evidence; API errors must never imply live.
+      const duration = /^\d+ (?:years?|months?|weeks?|days?|hours?|minutes?|seconds?)(?:,? \d+ (?:years?|months?|weeks?|days?|hours?|minutes?|seconds?))*$/i;
+      render(duration.test(text) ? "live" : /^natinhox is offline\.?$/i.test(text) ? "offline" : "unknown");
+    } catch {
+      render("unknown");
+    } finally {
+      clearTimeout(timeout);
+      pending = false;
+    }
+  }
+
+  check();
+  setInterval(check, 60000);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) render("unknown");
+    else check();
+  });
 })();
 
 const shareBtn = document.getElementById("shareBtn");
-const shareBtnLabel = document.getElementById("shareBtnLabel");
+const feedback = document.getElementById("shareFeedback");
+const fallback = document.getElementById("shareFallback");
+const shareUrl = document.getElementById("shareUrl");
 
 if (shareBtn) {
-  const defaultLabel = shareBtnLabel.textContent;
-
+  shareBtn.hidden = false;
   shareBtn.addEventListener("click", async () => {
     const shareData = {
       title: document.title,
       text: "Confira o perfil oficial do NATINHOX!",
-      url: location.href
+      url: document.querySelector('link[rel="canonical"]')?.href || location.href.split(/[?#]/)[0]
     };
-
-    if (navigator.share) {
-      try {
-        await navigator.share(shareData);
-      } catch (_) {}
-      return;
-    }
-
+    shareBtn.disabled = true;
+    if (feedback) feedback.textContent = "";
+    if (fallback) fallback.hidden = true;
     try {
-      await navigator.clipboard.writeText(shareData.url);
-      shareBtnLabel.textContent = "Link copiado!";
-      setTimeout(() => { shareBtnLabel.textContent = defaultLabel; }, 2000);
-    } catch (_) {
-      shareBtnLabel.textContent = shareData.url;
+      if (navigator.share) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (error) {
+          if (error.name === "AbortError") return;
+        }
+      }
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        if (feedback) feedback.textContent = "Link copiado!";
+      } catch {
+        if (fallback && shareUrl) {
+          fallback.hidden = false;
+          shareUrl.value = shareData.url;
+          shareUrl.focus();
+          shareUrl.select();
+        }
+        if (feedback) feedback.textContent = "Selecione e copie o link abaixo para compartilhar.";
+      }
+    } finally {
+      shareBtn.disabled = false;
     }
   });
 }

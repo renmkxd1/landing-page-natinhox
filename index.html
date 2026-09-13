@@ -30,6 +30,7 @@
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="preload" href="avatar-natinhox.webp" as="image" type="image/webp" />
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="premium.css" />
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -79,11 +80,16 @@
 </head>
 
 <body>
+  <a class="skip-link" href="#lives">Pular para os canais</a>
   <div class="bg-grid"></div>
   <div class="orb orb-one"></div>
   <div class="orb orb-two"></div>
 
   <main class="shell">
+    <div class="masthead">
+      <div class="brand-signature"><span class="brand-monogram" aria-hidden="true">N</span><span>NATINHOX / CANAIS OFICIAIS</span></div>
+      <button class="effects-toggle" id="effectsToggle" type="button" aria-pressed="false" hidden>Pausar efeitos</button>
+    </div>
     <header class="profile">
       <div class="avatar-wrap">
         <div class="avatar">
@@ -95,10 +101,10 @@
         <span class="status-dot" id="statusDot" title="Status da live" aria-hidden="true"></span>
       </div>
 
-      <div class="eyebrow">OFFICIAL CREATOR PAGE</div>
+      <div class="eyebrow">BEM-VINDO AO MEU UNIVERSO</div>
       <h1>NATINHOX</h1>
-      <p class="tagline">Streamer • Gamer • Creator</p>
-      <p class="bio">GTA RP, Valorant, resenha e os melhores momentos das lives. Escolha sua plataforma e vem pra comunidade.</p>
+      <p class="tagline">Streamer • Gamer • Criador</p>
+      <p class="bio">Lives, resenha e boas histórias. Escolha seu canal e vem fazer parte da comunidade.</p>
 
       <div class="chips">
         <span>🎮 GTA RP</span>
@@ -106,19 +112,24 @@
         <span>🎬 Cortes</span>
       </div>
 
-      <button type="button" class="share-btn" id="shareBtn" data-goatcounter-click="Compartilhar perfil">
-        <span class="share-icon" aria-hidden="true">↗</span>
-        <span id="shareBtnLabel">Compartilhar perfil</span>
-      </button>
+
     </header>
 
-    <section class="featured">
+      <nav class="quick-nav" aria-label="Explore o perfil">
+        <a href="#lives">Lives</a>
+        <a href="#redes">Redes</a>
+        <a href="#apoie">Apoie</a>
+        <a href="#parcerias">Parcerias</a>
+      </nav>
+
+    <section class="featured" id="lives" tabindex="-1" aria-label="Canais de transmissão">
       <a class="featured-card twitch" href="https://www.twitch.tv/natinhox" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Twitch">
         <span class="live-badge" id="twitchLiveBadge">🔴 AO VIVO</span>
         <div>
           <span class="kicker">PLATAFORMA PRINCIPAL</span>
           <strong>Assista na Twitch</strong>
           <small>twitch.tv/natinhox</small>
+          <small id="liveStatus" role="status">Confira as lives no canal</small>
         </div>
         <span class="arrow" aria-hidden="true">↗</span>
       </a>
@@ -133,33 +144,22 @@
       </a>
     </section>
 
-    <section class="spotlight">
-      <div class="spotlight-glow" aria-hidden="true"></div>
-      <span class="spotlight-badge">PARCEIRO OFICIAL</span>
-      <div class="spotlight-body">
-        <picture>
-          <source srcset="graciosa-logo.webp" type="image/webp" />
-          <img class="spotlight-logo" src="graciosa-logo.png" alt="Logo Graciosa Roleplay" width="112" height="112" loading="lazy" decoding="async" />
-        </picture>
-        <div class="spotlight-copy">
-          <span class="kicker">CIDADE DE ROLEPLAY</span>
-          <h2>Graciosa Roleplay</h2>
-          <p>A cidade de GTA RP onde o NATINHOX vive suas histórias. Entre, crie seu personagem e faça parte da comunidade.</p>
-          <div class="spotlight-actions">
-            <a href="https://discord.gg/KwWGzyrzhn" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Graciosa - Discord">Entrar no Discord</a>
-            <a href="https://www.instagram.com/graciosaroleplay/" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Graciosa - Instagram">Instagram</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
+    <section class="section" id="redes" tabindex="-1" aria-labelledby="redesTitle">
       <div class="section-title">
-        <span>MINHAS REDES</span>
+        <h2 id="redesTitle">Continue comigo</h2>
         <i></i>
       </div>
 
+      <p class="section-intro">Cortes, bastidores e a comunidade em um só lugar.</p>
       <div class="links">
+        <a class="link-card community-card" href="https://discord.gg/thczBVge" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Discord">
+          <div class="icon icon-discord" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></div>
+          <div class="text">
+            <strong>Discord NATINHOX</strong>
+            <span>Converse com a galera e acompanhe as novidades</span>
+          </div>
+          <span class="arrow" aria-hidden="true">↗</span>
+        </a>
         <a class="link-card" href="https://www.tiktok.com/@oficial_natinhox" target="_blank" rel="noopener noreferrer" data-goatcounter-click="TikTok">
           <div class="icon icon-tiktok" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></div>
           <div class="text">
@@ -187,14 +187,7 @@
           <span class="arrow" aria-hidden="true">↗</span>
         </a>
 
-        <a class="link-card" href="https://discord.gg/thczBVge" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Discord">
-          <div class="icon icon-discord" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.317 4.3698a19.7913 19.7913 0 00-4.8851-1.5152.0741.0741 0 00-.0785.0371c-.211.3753-.4447.8648-.6083 1.2495-1.8447-.2762-3.68-.2762-5.4868 0-.1636-.3933-.4058-.8742-.6177-1.2495a.077.077 0 00-.0785-.037 19.7363 19.7363 0 00-4.8852 1.515.0699.0699 0 00-.0321.0277C.5334 9.0458-.319 13.5799.0992 18.0578a.0824.0824 0 00.0312.0561c2.0528 1.5076 4.0413 2.4228 5.9929 3.0294a.0777.0777 0 00.0842-.0276c.4616-.6304.8731-1.2952 1.226-1.9942a.076.076 0 00-.0416-.1057c-.6528-.2476-1.2743-.5495-1.8722-.8923a.077.077 0 01-.0076-.1277c.1258-.0943.2517-.1923.3718-.2914a.0743.0743 0 01.0776-.0105c3.9278 1.7933 8.18 1.7933 12.0614 0a.0739.0739 0 01.0785.0095c.1202.099.246.1981.3728.2924a.077.077 0 01-.0066.1276 12.2986 12.2986 0 01-1.873.8914.0766.0766 0 00-.0407.1067c.3604.698.7719 1.3628 1.225 1.9932a.076.076 0 00.0842.0286c1.961-.6067 3.9495-1.5219 6.0023-3.0294a.077.077 0 00.0313-.0552c.5004-5.177-.8382-9.6739-3.5485-13.6604a.061.061 0 00-.0312-.0286zM8.02 15.3312c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9555-2.4189 2.157-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.9555 2.4189-2.1569 2.4189zm7.9748 0c-1.1825 0-2.1569-1.0857-2.1569-2.419 0-1.3332.9554-2.4189 2.1569-2.4189 1.2108 0 2.1757 1.0952 2.1568 2.419 0 1.3332-.946 2.4189-2.1568 2.4189Z"/></svg></div>
-          <div class="text">
-            <strong>Discord NATINHOX</strong>
-            <span>Entre na comunidade oficial</span>
-          </div>
-          <span class="arrow" aria-hidden="true">↗</span>
-        </a>
+
 
         <a class="link-card" href="https://k.kwai.com/u/@Natinhox/GyCMK8mJ" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Kwai">
           <div class="icon icon-kwai" aria-hidden="true">K</div>
@@ -207,7 +200,27 @@
       </div>
     </section>
 
-    <section class="support-banner">
+    <section class="spotlight">
+      <div class="spotlight-glow" aria-hidden="true"></div>
+      <span class="spotlight-badge">PARCEIRO OFICIAL</span>
+      <div class="spotlight-body">
+        <picture>
+          <source srcset="graciosa-logo.webp" type="image/webp" />
+          <img class="spotlight-logo" src="graciosa-logo.png" alt="Logo Graciosa Roleplay" width="112" height="112" loading="lazy" decoding="async" />
+        </picture>
+        <div class="spotlight-copy">
+          <span class="kicker">CIDADE DE ROLEPLAY</span>
+          <h2>Graciosa Roleplay</h2>
+          <p>A cidade de GTA RP onde o NATINHOX vive suas histórias. Entre, crie seu personagem e faça parte da comunidade.</p>
+          <div class="spotlight-actions">
+            <a href="https://discord.gg/KwWGzyrzhn" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Graciosa - Discord">Entrar no Discord</a>
+            <a href="https://www.instagram.com/graciosaroleplay/" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Graciosa - Instagram">Instagram</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="support-banner" id="apoie" tabindex="-1" aria-labelledby="apoieTitle">
       <a class="support-banner-link" href="https://www.livepix.gg/natinhox" target="_blank" rel="noopener noreferrer" data-goatcounter-click="LivePix">
         <picture>
           <source srcset="apoie-natinhox.webp" type="image/webp" />
@@ -215,7 +228,7 @@
         </picture>
         <div class="support-banner-copy">
           <span class="kicker">FORTALEÇA A LIVE</span>
-          <h2>Apoie o NATINHOX</h2>
+          <h2 id="apoieTitle">Apoie o NATINHOX</h2>
           <p>Sua doação aparece na live, ajuda a evoluir o conteúdo e fortalece a comunidade.</p>
           <span class="support-banner-cta">Doar via LivePix <span aria-hidden="true">↗</span></span>
         </div>
@@ -224,7 +237,7 @@
 
     <section class="section project">
       <div class="section-title">
-        <span>PROJETOS</span>
+        <h2>Além das lives</h2>
         <i></i>
       </div>
 
@@ -239,25 +252,27 @@
       </a>
     </section>
 
-    <section class="section sponsors">
+    <section class="section sponsors" id="parcerias" tabindex="-1" aria-labelledby="parceriasTitle">
       <div class="section-title">
-        <span>PATROCINADORES</span>
+        <h2 id="parceriasTitle">Vamos criar juntos?</h2>
         <i></i>
       </div>
 
-      <p class="sponsors-note">
-        🤝 Aceito parcerias e patrocínios — sua marca pode estar aqui.
-        <a href="https://discord.gg/thczBVge" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Sponsors - Discord">Fale comigo no Discord</a>.
-      </p>
-
-      <div class="sponsor-slots">
-        <div class="sponsor-slot"><span>Espaço disponível</span></div>
-        <div class="sponsor-slot"><span>Espaço disponível</span></div>
-        <div class="sponsor-slot"><span>Espaço disponível</span></div>
-      </div>
+      <p class="sponsors-note">Sua marca faz parte desse universo? Vamos conversar sobre parcerias e patrocínios.</p>
+      <a class="partnership-cta" href="https://discord.gg/thczBVge" target="_blank" rel="noopener noreferrer" data-goatcounter-click="Sponsors - Discord">Conversar sobre parceria <span aria-hidden="true">↗</span></a>
     </section>
 
     <footer>
+      <button type="button" class="share-btn" id="shareBtn" hidden data-goatcounter-click="Compartilhar perfil">
+        <span class="share-icon" aria-hidden="true">↗</span>
+        <span id="shareBtnLabel">Compartilhar perfil</span>
+      </button>
+      <p id="shareFeedback" class="share-feedback" role="status" aria-live="polite"></p>
+      <div id="shareFallback" class="share-fallback" hidden>
+        <label for="shareUrl">Copie o link do perfil:</label>
+        <input id="shareUrl" type="url" readonly />
+      </div>
+
       <div class="footer-brand">NATINHOX</div>
       <p>© <span id="year">2026</span> • Todos os direitos reservados.</p>
     </footer>
@@ -265,5 +280,6 @@
 
   <script data-goatcounter="https://natinhox.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
   <script src="script.js"></script>
+  <script src="effects.js"></script>
 </body>
 </html>
