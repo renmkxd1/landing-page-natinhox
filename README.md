@@ -120,8 +120,12 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   `decapi.me` (serviço público e gratuito, sem login/token) para saber se o
   canal `natinhox` está ao vivo na Twitch. O mesmo serviço também informa o
   número de seguidores da Twitch, exibido abaixo do status no card ("X
-  seguidores na Twitch"). Não cobre a Kick (a API pública da Kick bloqueia
-  chamadas de outros domínios via CORS).
+  seguidores na Twitch").
+- O card da Kick tem o mesmo tratamento: selo "AO VIVO", espectadores e
+  seguidores, consultando `kick.com/api/v2/channels/natinhox1` (API pública
+  da própria Kick, sem login/token, que já responde com CORS liberado).
+  Igual à Twitch, qualquer erro ou resposta inesperada mantém o texto neutro
+  "Confira as lives no canal" — nunca assume "ao vivo" por engano.
 - Quando a live está ativa, o jogo atual (`decapi.me/twitch/game/natinhox`)
   aparece no card da Twitch ("🎮 Jogando GTA V"), atualizado junto com o
   status a cada 60 segundos. Some automaticamente quando a live termina ou a
@@ -141,18 +145,20 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   (ex.: "79 membros · 15 online"), via API pública e sem autenticação do
   Discord (`discord.com/api/v10/invites/<código>?with_counts=true`, mesmo
   código do convite usado no botão "Entrar no Discord"). Se o convite expirar
-  ou o serviço falhar, o número simplesmente não aparece. São as únicas
-  consultas externas que o site faz, além do analytics — todas falham em
-  silêncio, sem quebrar a página.
+  ou o serviço falhar, o número simplesmente não aparece. Junto com a Twitch
+  (`decapi.me`) e a Kick (`kick.com/api/v2`), são as únicas consultas
+  externas que o site faz, além do analytics — todas falham em silêncio, sem
+  quebrar a página.
 
 ## Melhorias de navegação e confiabilidade
 - Atalhos para Lives, Redes, Graciosa RP, Apoie, Parcerias e FAQ, com acesso por teclado.
 - Botão "Voltar ao topo" (canto inferior direito) aparece depois de rolar a página;
   usa `href="#top"` como link real (funciona sem JavaScript) e o JS (`effects.js`)
   só controla quando ele fica visível.
-- Status Twitch atualizado a cada 60 segundos enquanto a página está visível,
-  com limite de 8 segundos por consulta. Apenas uma duração válida ativa o selo;
-  erros HTTP, falhas de rede e respostas desconhecidas usam texto neutro.
+- Status Twitch e Kick atualizados a cada 60 segundos enquanto a página está
+  visível, com limite de 8 segundos por consulta. Apenas uma resposta válida
+  e explícita ativa o selo "AO VIVO"; erros HTTP, falhas de rede e respostas
+  desconhecidas usam texto neutro em ambos os cards.
 - Compartilhamento usa a URL canônica, sem parâmetros ou âncoras. Se a opção
   nativa falhar, tenta copiar; se a cópia falhar, exibe um campo selecionável.
   Cancelar o compartilhamento nativo encerra a ação normalmente.

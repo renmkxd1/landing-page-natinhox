@@ -139,6 +139,58 @@ function celebrate(originEl) {
   });
 })();
 
+(function watchKickLive() {
+  const badge = document.getElementById("kickLiveBadge");
+  const status = document.getElementById("kickStatus");
+  const followerEl = document.getElementById("kickFollowerCount");
+  if (!badge && !status && !followerEl) return;
+  let pending = false;
+  let followerShown = false;
+
+  function render(state, viewerCount) {
+    const live = state === "live";
+    badge?.classList.toggle("show", live);
+    if (status) status.textContent = live
+      ? `Ao vivo agora na Kick${Number.isInteger(viewerCount) ? ` · ${viewerCount.toLocaleString("pt-BR")} espectadores` : ""}`
+      : "Confira as lives no canal";
+  }
+
+  async function check({ skipIfHidden = false } = {}) {
+    if (pending || (skipIfHidden && document.hidden)) return;
+    pending = true;
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 8000);
+    try {
+      const response = await fetch("https://kick.com/api/v2/channels/natinhox1", {
+        cache: "no-store", signal: controller.signal
+      });
+      if (!response.ok) throw new Error("Status unavailable");
+      const data = await response.json();
+      const live = data?.livestream?.is_live === true;
+      render(live ? "live" : "offline", data?.livestream?.viewer_count);
+      if (followerEl && !followerShown) {
+        const followers = data?.followers_count;
+        if (Number.isInteger(followers) && followers >= 0) {
+          revealBadge(followerEl, `${followers.toLocaleString("pt-BR")} seguidores na Kick`);
+          followerShown = true;
+        }
+      }
+    } catch {
+      render("unknown");
+    } finally {
+      clearTimeout(timeout);
+      pending = false;
+    }
+  }
+
+  check();
+  setInterval(() => check({ skipIfHidden: true }), 60000);
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) render("unknown");
+    else check();
+  });
+})();
+
 function revealBadge(el, text) {
   el.textContent = text;
   el.hidden = false;

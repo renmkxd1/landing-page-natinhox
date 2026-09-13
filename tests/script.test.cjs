@@ -6,9 +6,10 @@ const source = fs.readFileSync(require('node:path').join(__dirname, '../script.j
 
 async function setup({ body = 'natinhox is offline', ok = true, networkError = false, navigator = {},
   followBody = '246', followOk = true, discordBody = { approximate_member_count: 79, approximate_presence_count: 15 }, discordOk = true,
-  viewerBody = '1234', gameBody = 'GTA V', gameOk = true, visited = false, reducedMotion = false } = {}) {
+  viewerBody = '1234', gameBody = 'GTA V', gameOk = true, visited = false, reducedMotion = false,
+  kickBody = { livestream: null, followers_count: 320 }, kickOk = true, kickNetworkError = false } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
+  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl', 'kickLiveBadge', 'kickStatus', 'kickFollowerCount']) {
     elements.set(id, { hidden: true, textContent: '', src: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
@@ -39,6 +40,10 @@ async function setup({ body = 'natinhox is offline', ok = true, networkError = f
       }
       if (typeof url === 'string' && url.includes('discord.com')) {
         return { ok: discordOk, json: async () => discordBody };
+      }
+      if (typeof url === 'string' && url.includes('kick.com')) {
+        if (kickNetworkError) throw Error('network');
+        return { ok: kickOk, json: async () => kickBody };
       }
       if (networkError) throw Error('network');
       return { ok, text: async () => body };
@@ -156,3 +161,37 @@ test('cancelled sharing does not copy or open fallback', async () => {
   assert.equal(elements.get('shareFeedback').textContent, '');
   assert.equal(elements.get('shareBtn').disabled, false);
 });
+
+test('Kick live badge and viewer count show while live', async () => {
+  const { elements } = await setup({ kickBody: { livestream: { is_live: true, viewer_count: 512 }, followers_count: 320 } });
+  assert.equal(elements.get('kickLiveBadge').classList.show, true);
+  assert.equal(elements.get('kickStatus').textContent, 'Ao vivo agora na Kick · 512 espectadores');
+});
+test('Kick status stays neutral when offline', async () => {
+  const { elements } = await setup({ kickBody: { livestream: null, followers_count: 320 } });
+  assert.equal(elements.get('kickLiveBadge').classList.show, false);
+  assert.equal(elements.get('kickStatus').textContent, 'Confira as lives no canal');
+});
+for (const options of [{ kickOk: false }, { kickNetworkError: true }, { kickBody: {} }, { kickBody: { livestream: { is_live: false } } }]) {
+  test(`Kick never falsely live: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('kickLiveBadge').classList.show, false);
+    assert.equal(elements.get('kickStatus').textContent, 'Confira as lives no canal');
+  });
+}
+test('Kick live badge stays true even without a viewer count', async () => {
+  const { elements } = await setup({ kickBody: { livestream: { is_live: true } } });
+  assert.equal(elements.get('kickLiveBadge').classList.show, true);
+  assert.equal(elements.get('kickStatus').textContent, 'Ao vivo agora na Kick');
+});
+test('valid Kick follower count is shown', async () => {
+  const { elements } = await setup({ kickBody: { livestream: null, followers_count: 320 } });
+  assert.equal(elements.get('kickFollowerCount').hidden, false);
+  assert.equal(elements.get('kickFollowerCount').textContent, '320 seguidores na Kick');
+});
+for (const options of [{ kickBody: { livestream: null, followers_count: -1 } }, { kickOk: false }, { kickNetworkError: true }]) {
+  test(`invalid Kick follower count stays hidden: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('kickFollowerCount').hidden, true);
+  });
+}
