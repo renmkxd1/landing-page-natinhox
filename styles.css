@@ -235,6 +235,21 @@ h1{
 
 .share-btn .share-icon{font-size:14px}
 
+.quick-share{display:flex;justify-content:center;gap:10px;margin:0 0 8px}
+.quick-share a{
+  display:grid;
+  place-items:center;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line);
+  color:#b9c9e8;
+  transition:.2s ease;
+}
+.quick-share a:hover{border-color:rgba(100,187,255,.45);color:var(--text);background:rgba(255,255,255,.07)}
+.quick-share svg{width:17px;height:17px;fill:currentColor}
+
 .featured{
   display:grid;
   grid-template-columns:1fr 1fr;

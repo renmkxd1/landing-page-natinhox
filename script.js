@@ -256,10 +256,26 @@ function revealBadge(el, text) {
     .catch(() => {});
 })();
 
+function canonicalShareUrl() {
+  return document.querySelector('link[rel="canonical"]')?.href || location.href.split(/[?#]/)[0];
+}
+
 const shareBtn = document.getElementById("shareBtn");
 const feedback = document.getElementById("shareFeedback");
 const fallback = document.getElementById("shareFallback");
 const shareUrl = document.getElementById("shareUrl");
+
+(function setupQuickShare() {
+  const wrap = document.getElementById("quickShare");
+  const whatsapp = document.getElementById("shareWhatsapp");
+  const x = document.getElementById("shareX");
+  if (!wrap || !whatsapp || !x) return;
+  const url = canonicalShareUrl();
+  const text = "Confira o perfil oficial do NATINHOX!";
+  whatsapp.href = `https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`;
+  x.href = `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(text)}`;
+  wrap.hidden = false;
+})();
 
 if (shareBtn) {
   shareBtn.hidden = false;
@@ -267,7 +283,7 @@ if (shareBtn) {
     const shareData = {
       title: document.title,
       text: "Confira o perfil oficial do NATINHOX!",
-      url: document.querySelector('link[rel="canonical"]')?.href || location.href.split(/[?#]/)[0]
+      url: canonicalShareUrl()
     };
     shareBtn.disabled = true;
     if (feedback) feedback.textContent = "";

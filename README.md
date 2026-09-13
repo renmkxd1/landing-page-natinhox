@@ -93,6 +93,9 @@ que estiver sendo servido no momento.
   compartilhamento nativo, e uma pequena celebração animada (confete) quando o
   link é compartilhado ou copiado com sucesso — desativada automaticamente se
   os efeitos estiverem pausados ou o dispositivo preferir menos movimento.
+  Dois ícones de atalho (WhatsApp e X) abrem a tela de compartilhamento nativa
+  dessas plataformas já com o link do perfil preenchido, para quem prefere um
+  toque direto em vez do botão genérico.
 - **Perguntas frequentes**: seção em acordeão (`<details>`/`<summary>`, sem JS) antes do
   rodapé, com atalho próprio na navegação rápida. As respostas também aparecem como
   `FAQPage` no JSON-LD do `<head>` para aparecer em resultados de busca do Google.

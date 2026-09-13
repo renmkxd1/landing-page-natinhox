@@ -9,7 +9,7 @@ async function setup({ body = 'natinhox is offline', ok = true, networkError = f
   viewerBody = '1234', gameBody = 'GTA V', gameOk = true, visited = false, reducedMotion = false,
   kickBody = { livestream: null, followers_count: 320 }, kickOk = true, kickNetworkError = false } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl', 'kickLiveBadge', 'kickStatus', 'kickFollowerCount', 'liveEmbedKick', 'liveEmbedKickFrame', 'kickEmbedViewerCount', 'kickGame']) {
+  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl', 'kickLiveBadge', 'kickStatus', 'kickFollowerCount', 'liveEmbedKick', 'liveEmbedKickFrame', 'kickEmbedViewerCount', 'kickGame', 'quickShare', 'shareWhatsapp', 'shareX']) {
     elements.set(id, { hidden: true, textContent: '', src: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
@@ -139,6 +139,12 @@ for (const options of [
     assert.equal(elements.get('graciosaCount').hidden, true);
   });
 }
+test('quick-share links point to WhatsApp and X with the canonical URL', async () => {
+  const { elements } = await setup({});
+  assert.equal(elements.get('quickShare').hidden, false);
+  assert.equal(elements.get('shareWhatsapp').href, 'https://wa.me/?text=Confira%20o%20perfil%20oficial%20do%20NATINHOX!%20https%3A%2F%2Fexample.com%2Fprofile%2F');
+  assert.equal(elements.get('shareX').href, 'https://twitter.com/intent/tweet?url=https%3A%2F%2Fexample.com%2Fprofile%2F&text=Confira%20o%20perfil%20oficial%20do%20NATINHOX!');
+});
 test('clipboard receives canonical URL', async () => {
   let copied;
   const { elements } = await setup({ navigator: { clipboard: { writeText: async value => { copied = value; } } } });
