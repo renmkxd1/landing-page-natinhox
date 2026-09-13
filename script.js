@@ -1,14 +1,74 @@
 ﻿const year = document.getElementById("year");
 if (year) year.textContent = new Date().getFullYear();
 
+(function personalizeGreeting() {
+  const el = document.getElementById("greeting");
+  if (!el) return;
+  const hour = new Date().getHours();
+  const timeGreeting = hour < 6 ? "Boa madrugada"
+    : hour < 12 ? "Bom dia"
+    : hour < 18 ? "Boa tarde"
+    : "Boa noite";
+  let returning = false;
+  try {
+    returning = localStorage.getItem("natinhox_visited") === "1";
+    localStorage.setItem("natinhox_visited", "1");
+  } catch {}
+  el.textContent = returning
+    ? `${timeGreeting}, bem-vindo de volta`
+    : `${timeGreeting}, bem-vindo ao meu universo`;
+})();
+
+function celebrate(originEl) {
+  if (!originEl || typeof originEl.animate !== "function") return;
+  if (typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  if (document.documentElement?.dataset.effects === "off") return;
+  const rect = originEl.getBoundingClientRect();
+  const originX = rect.left + rect.width / 2;
+  const originY = rect.top + rect.height / 2;
+  const colors = ["#3ee7ff", "#8b5cf6", "#53fc18", "#f2b705"];
+  for (let i = 0; i < 10; i++) {
+    const dot = document.createElement("span");
+    dot.className = "confetti-dot";
+    dot.setAttribute("aria-hidden", "true");
+    dot.style.background = colors[i % colors.length];
+    dot.style.left = `${originX}px`;
+    dot.style.top = `${originY}px`;
+    document.body.appendChild(dot);
+    const angle = (Math.PI * 2 * i) / 10;
+    const distance = 60 + Math.random() * 40;
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+    const animation = dot.animate([
+      { transform: "translate(-50%,-50%) scale(1)", opacity: 1 },
+      { transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px)) scale(0)`, opacity: 0 }
+    ], { duration: 700 + Math.random() * 300, easing: "cubic-bezier(.2,.7,.2,1)" });
+    animation.onfinish = () => dot.remove();
+  }
+}
+
 (function watchTwitchLive() {
   const dot = document.getElementById("statusDot");
   const badge = document.getElementById("twitchLiveBadge");
   const status = document.getElementById("liveStatus");
   const embedWrap = document.getElementById("liveEmbed");
   const embedFrame = document.getElementById("liveEmbedFrame");
+  const viewerCount = document.getElementById("liveViewerCount");
   if (!dot && !badge && !status) return;
   let pending = false;
+
+  function updateViewerCount() {
+    if (!viewerCount) return;
+    fetch("https://decapi.me/twitch/viewercount/natinhox", { cache: "no-store" })
+      .then(response => response.ok ? response.text() : Promise.reject())
+      .then(text => {
+        const count = Number(text.trim());
+        viewerCount.textContent = Number.isInteger(count) && count >= 0
+          ? ` \u00b7 ${count.toLocaleString("pt-BR")} espectadores`
+          : "";
+      })
+      .catch(() => { viewerCount.textContent = ""; });
+  }
 
   function render(state) {
     const live = state === "live";
@@ -26,6 +86,8 @@ if (year) year.textContent = new Date().getFullYear();
       }
       embedWrap.hidden = !live;
     }
+    if (live) updateViewerCount();
+    else if (viewerCount) viewerCount.textContent = "";
   }
 
   async function check({ skipIfHidden = false } = {}) {
@@ -111,6 +173,7 @@ if (shareBtn) {
       if (navigator.share) {
         try {
           await navigator.share(shareData);
+          celebrate(shareBtn);
           return;
         } catch (error) {
           if (error.name === "AbortError") return;
@@ -119,6 +182,7 @@ if (shareBtn) {
       try {
         await navigator.clipboard.writeText(shareData.url);
         if (feedback) feedback.textContent = "Link copiado!";
+        celebrate(shareBtn);
       } catch {
         if (fallback && shareUrl) {
           fallback.hidden = false;

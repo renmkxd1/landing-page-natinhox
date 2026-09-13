@@ -72,8 +72,13 @@ que estiver sendo servido no momento.
 - Marvia System: https://www.marviasistem.com.br/
 
 ## Seções em destaque
+- **Saudação personalizada**: o texto acima do nome muda com o horário de quem
+  visita ("Bom dia" / "Boa tarde" / "Boa noite" / "Boa madrugada", calculado no
+  navegador da pessoa) e reconhece quem já esteve na página antes ("bem-vindo
+  de volta"), usando só `localStorage` local — nada é enviado a lugar nenhum.
 - **Player ao vivo**: quando o NATINHOX está transmitindo, a live da Twitch
-  aparece embutida logo abaixo dos cards de canais — sem precisar clicar em nada.
+  aparece embutida logo abaixo dos cards de canais — sem precisar clicar em
+  nada — junto com o número de espectadores em tempo real.
 - **Graciosa Roleplay** — banner dourado depois das redes sociais, com a
   logo oficial (`graciosa-logo.png`), badge "PARCEIRO OFICIAL" e botões para
   Discord/Instagram da cidade.
@@ -82,7 +87,10 @@ que estiver sendo servido no momento.
 - **Parcerias**: convite direto com botão de contato pelo Discord, substituindo os espaços vazios de marcas.
 - **Navegação**: topo compacto e atalhos que permanecem visíveis durante a rolagem. Canais primeiro, comunidade e redes em seguida, depois parceiro, apoio e projetos.
 - **Redes**: Discord em destaque; demais redes em duas colunas no desktop e uma no celular, com descrições completas.
-- **Compartilhamento**: disponível no rodapé, com os mesmos recursos de cópia e compartilhamento nativo.
+- **Compartilhamento**: disponível no rodapé, com os mesmos recursos de cópia e
+  compartilhamento nativo, e uma pequena celebração animada (confete) quando o
+  link é compartilhado ou copiado com sucesso — desativada automaticamente se
+  os efeitos estiverem pausados ou o dispositivo preferir menos movimento.
 - **Perguntas frequentes**: seção em acordeão (`<details>`/`<summary>`, sem JS) antes do
   rodapé, com atalho próprio na navegação rápida. As respostas também aparecem como
   `FAQPage` no JSON-LD do `<head>` para aparecer em resultados de busca do Google.
@@ -122,7 +130,9 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   simplesmente não carrega até você atualizar isso** (veja "Se for trocar de
   domínio" acima — o mesmo cuidado se aplica aqui). O iframe só é criado
   quando a live é confirmada e é removido assim que ela termina ou a aba
-  fica em segundo plano, para não gastar dados à toa.
+  fica em segundo plano, para não gastar dados à toa. O número de
+  espectadores (endpoint `decapi.me/twitch/viewercount/natinhox`) é
+  atualizado junto com a checagem de status a cada 60 segundos.
 - O banner da Graciosa Roleplay mostra membros e pessoas online em tempo real
   (ex.: "79 membros · 15 online"), via API pública e sem autenticação do
   Discord (`discord.com/api/v10/invites/<código>?with_counts=true`, mesmo

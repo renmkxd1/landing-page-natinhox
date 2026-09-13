@@ -5,19 +5,34 @@ const fs = require('node:fs');
 const source = fs.readFileSync(require('node:path').join(__dirname, '../script.js'), 'utf8');
 
 async function setup({ body = 'natinhox is offline', ok = true, networkError = false, navigator = {},
-  followBody = '246', followOk = true, discordBody = { approximate_member_count: 79, approximate_presence_count: 15 }, discordOk = true } = {}) {
+  followBody = '246', followOk = true, discordBody = { approximate_member_count: 79, approximate_presence_count: 15 }, discordOk = true,
+  viewerBody = '1234', visited = false, reducedMotion = false } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
+  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
     elements.set(id, { hidden: true, textContent: '', src: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
   let interval;
-  const document = { hidden: false, getElementById: id => elements.get(id), querySelector: () => ({ href: 'https://example.com/profile/' }), addEventListener() {} };
+  const store = visited ? { natinhox_visited: '1' } : {};
+  const localStorage = { getItem: key => (key in store ? store[key] : null), setItem: (key, value) => { store[key] = String(value); } };
+  const document = {
+    hidden: false,
+    documentElement: { dataset: {} },
+    body: { appendChild() {} },
+    createElement: () => ({ style: {}, setAttribute() {}, animate: () => ({ onfinish: null }), remove() {} }),
+    getElementById: id => elements.get(id),
+    querySelector: () => ({ href: 'https://example.com/profile/' }),
+    addEventListener() {}
+  };
   vm.runInNewContext(source, { document, navigator, location: { href: 'https://example.com/?private=1#section', hostname: 'example.com' }, Date, AbortController,
     setTimeout, clearTimeout, setInterval: fn => { interval = fn; }, requestAnimationFrame: fn => fn(),
+    localStorage, matchMedia: () => ({ matches: reducedMotion }),
     fetch: async url => {
       if (typeof url === 'string' && url.includes('followcount')) {
         return { ok: followOk, text: async () => followBody };
+      }
+      if (typeof url === 'string' && url.includes('viewercount')) {
+        return { ok: true, text: async () => viewerBody };
       }
       if (typeof url === 'string' && url.includes('discord.com')) {
         return { ok: discordOk, json: async () => discordBody };
@@ -26,7 +41,7 @@ async function setup({ body = 'natinhox is offline', ok = true, networkError = f
       return { ok, text: async () => body };
     } });
   await new Promise(resolve => setImmediate(resolve));
-  return { elements, document, refresh: interval };
+  return { elements, document, store, refresh: interval };
 }
 
 for (const body of ['1 hour, 2 minutes', '45 seconds', '2 days, 1 hour, 0 minutes, 2 seconds']) {
@@ -53,6 +68,25 @@ for (const options of [{ body: 'natinhox is offline' }, { networkError: true }])
     assert.equal(elements.get('liveEmbedFrame').src, '');
   });
 }
+test('viewer count is shown while live', async () => {
+  const { elements } = await setup({ body: '1 hour, 2 minutes', viewerBody: '1234' });
+  assert.equal(elements.get('liveViewerCount').textContent, ' · 1.234 espectadores');
+});
+for (const options of [{ body: 'natinhox is offline' }, { networkError: true }]) {
+  test(`viewer count stays empty when offline: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('liveViewerCount').textContent, '');
+  });
+}
+test('greeting personalizes for a first-time visitor and marks them as visited', async () => {
+  const { elements, store } = await setup({});
+  assert.match(elements.get('greeting').textContent, /, bem-vindo ao meu universo$/i);
+  assert.equal(store.natinhox_visited, '1');
+});
+test('greeting welcomes back a returning visitor', async () => {
+  const { elements } = await setup({ visited: true });
+  assert.match(elements.get('greeting').textContent, /, bem-vindo de volta$/i);
+});
 test('valid follower count is shown', async () => {
   const { elements } = await setup({ followBody: '1234' });
   assert.equal(elements.get('followerCount').hidden, false);
