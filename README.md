@@ -87,9 +87,13 @@ System usa o ícone `trending-up` da [Lucide](https://lucide.dev/) (licença
 ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
 
 ## Observações
-- O `script.js` registra cliques somente no navegador do visitante via
-  `localStorage`. Para analytics real, integre Plausible, Google Analytics,
-  Meta Pixel ou solução própria.
+- Analytics real via [GoatCounter](https://www.goatcounter.com/) (site
+  `natinhox.goatcounter.com`): visualizações de página e cliques por link
+  (Twitch, Kick, TikTok, YouTube, Instagram, Discord, Kwai, LivePix, Graciosa,
+  Marvia System, botão de compartilhar). Sem cookies, sem banner de
+  consentimento. Painel em https://natinhox.goatcounter.com/. Para adicionar
+  rastreamento em um novo link, inclua `data-goatcounter-click="Nome"` no
+  `<a>` correspondente em `index.html`.
 - O botão "Compartilhar perfil" usa a Web Share API nativa (mobile) e cai
   para copiar o link via clipboard em navegadores desktop.
 - "Adicionar à tela inicial" funciona tanto no Android/Chrome (via
