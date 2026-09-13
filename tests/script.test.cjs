@@ -9,7 +9,7 @@ async function setup({ body = 'natinhox is offline', ok = true, networkError = f
   viewerBody = '1234', gameBody = 'GTA V', gameOk = true, visited = false, reducedMotion = false,
   kickBody = { livestream: null, followers_count: 320 }, kickOk = true, kickNetworkError = false } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl', 'kickLiveBadge', 'kickStatus', 'kickFollowerCount', 'liveEmbedKick', 'liveEmbedKickFrame', 'kickEmbedViewerCount']) {
+  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl', 'kickLiveBadge', 'kickStatus', 'kickFollowerCount', 'liveEmbedKick', 'liveEmbedKickFrame', 'kickEmbedViewerCount', 'kickGame']) {
     elements.set(id, { hidden: true, textContent: '', src: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
@@ -207,6 +207,23 @@ for (const options of [{ kickBody: { livestream: null, followers_count: -1 } }, 
   test(`invalid Kick follower count stays hidden: ${JSON.stringify(options)}`, async () => {
     const { elements } = await setup(options);
     assert.equal(elements.get('kickFollowerCount').hidden, true);
+  });
+}
+
+test('Kick current game is shown while live', async () => {
+  const { elements } = await setup({ kickBody: { livestream: { is_live: true, viewer_count: 10, categories: [{ name: 'IRL' }] }, followers_count: 320 } });
+  assert.equal(elements.get('kickGame').hidden, false);
+  assert.equal(elements.get('kickGame').textContent, '🎮 Jogando IRL');
+});
+for (const options of [
+  { kickBody: { livestream: { is_live: true, categories: [] } } },
+  { kickBody: { livestream: { is_live: true } } },
+  { kickBody: { livestream: { is_live: true, categories: [{ name: 42 }] } } },
+  { kickBody: { livestream: null } }
+]) {
+  test(`Kick current game stays hidden without a valid category: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('kickGame').hidden, true);
   });
 }
 

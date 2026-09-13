@@ -125,11 +125,14 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   canal `natinhox` está ao vivo na Twitch. O mesmo serviço também informa o
   número de seguidores da Twitch, exibido abaixo do status no card ("X
   seguidores na Twitch").
-- O card da Kick tem o mesmo tratamento: selo "AO VIVO", espectadores e
-  seguidores, consultando `kick.com/api/v2/channels/natinhox1` (API pública
-  da própria Kick, sem login/token, que já responde com CORS liberado).
-  Igual à Twitch, qualquer erro ou resposta inesperada mantém o texto neutro
-  "Confira as lives no canal" — nunca assume "ao vivo" por engano.
+- O card da Kick tem o mesmo tratamento: selo "AO VIVO", espectadores,
+  seguidores e o jogo/categoria atual ("🎮 Jogando X"), consultando
+  `kick.com/api/v2/channels/natinhox1` (API pública da própria Kick, sem
+  login/token, que já responde com CORS liberado) — uma única chamada
+  cobre tudo, diferente da Twitch, que usa três endpoints separados do
+  `decapi.me`. Igual à Twitch, qualquer erro ou resposta inesperada mantém
+  o texto neutro "Confira as lives no canal" — nunca assume "ao vivo" por
+  engano.
 - Quando a Kick está ao vivo, o player oficial (`player.kick.com`) também
   carrega embutido, com o mesmo comportamento do player da Twitch (silenciado
   por padrão, criado só quando a live é confirmada, removido quando termina

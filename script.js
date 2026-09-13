@@ -152,16 +152,25 @@ function updateLiveDot() {
   const embedWrap = document.getElementById("liveEmbedKick");
   const embedFrame = document.getElementById("liveEmbedKickFrame");
   const embedViewerCount = document.getElementById("kickEmbedViewerCount");
-  if (!liveDot && !badge && !status && !followerEl && !embedWrap) return;
+  const gameEl = document.getElementById("kickGame");
+  if (!liveDot && !badge && !status && !followerEl && !embedWrap && !gameEl) return;
   let pending = false;
   let followerShown = false;
 
-  function render(state, viewerCount) {
+  function render(state, viewerCount, game) {
     const live = state === "live";
     liveOnPlatform.kick = live;
     updateLiveDot();
     badge?.classList.toggle("show", live);
     if (status) status.textContent = live ? "Ao vivo agora na Kick" : "Confira as lives no canal";
+    if (gameEl) {
+      if (live && game) {
+        gameEl.textContent = `🎮 Jogando ${game}`;
+        gameEl.hidden = false;
+      } else {
+        gameEl.hidden = true;
+      }
+    }
     if (embedWrap && embedFrame) {
       if (live && !embedFrame.src) {
         embedFrame.src = "https://player.kick.com/natinhox1?muted=true";
@@ -189,7 +198,8 @@ function updateLiveDot() {
       if (!response.ok) throw new Error("Status unavailable");
       const data = await response.json();
       const live = data?.livestream?.is_live === true;
-      render(live ? "live" : "offline", data?.livestream?.viewer_count);
+      const category = data?.livestream?.categories?.[0]?.name;
+      render(live ? "live" : "offline", data?.livestream?.viewer_count, typeof category === "string" ? category : undefined);
       if (followerEl && !followerShown) {
         const followers = data?.followers_count;
         if (Number.isInteger(followers) && followers >= 0) {
