@@ -10,9 +10,10 @@ Página estática pronta para substituir o Linktree.
 - `styles.css`
 - `script.js`
 - `favicon.svg`
-- `avatar-natinhox.png`
-- `graciosa-logo.png` — logo da Graciosa Roleplay (banner de destaque)
-- `apoie-natinhox.png` — arte de apoio/LivePix (banner "Apoie o NATINHOX")
+- `avatar-natinhox.png` (+ `.webp`) — foto de perfil
+- `graciosa-logo.png` (+ `.webp`) — logo da Graciosa Roleplay (banner de destaque)
+- `apoie-natinhox.png` (+ `.webp`) — arte de apoio/LivePix (banner "Apoie o NATINHOX")
+- `og-banner.png` — imagem 1200×630 usada nas prévias de compartilhamento (WhatsApp/Twitter/Discord)
 - `manifest.json` — permite "Adicionar à tela inicial" (PWA) no Android/Chrome/iOS
 - `icons/` — apple-touch-icon.png (180×180) e ícones PNG do manifest (192/512), gerados a partir do `favicon.svg`
 - `fonts/` — Inter e Orbitron auto-hospedadas (sem dependência do Google Fonts)
@@ -40,6 +41,13 @@ Publique esta pasta como site estático. Não há build obrigatório.
 O avatar já usa a foto `avatar-natinhox.png` (`.avatar img` no `styles.css`).
 Para trocar a foto, basta substituir o arquivo mantendo o mesmo nome, ou
 atualizar o `src` do `<img>` em `index.html`.
+
+As três imagens principais (avatar, logo da Graciosa e arte de apoio) são
+servidas via `<picture>` com uma versão `.webp` (menor) e fallback `.png`
+para navegadores antigos. Ao trocar qualquer uma delas, gere também o
+`.webp` correspondente (mesmo nome, extensão diferente) — por exemplo com
+`cwebp arquivo.png -q 82 -o arquivo.webp` — senão o navegador some direto
+para o `.png`, que é mais pesado.
 
 ### Se for trocar de domínio
 As tags `og:url`, `og:image`, `twitter:image`, `<link rel="canonical">`, o
@@ -88,3 +96,9 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   `manifest.json` + ícones PNG) quanto no iOS/Safari (via
   `icons/apple-touch-icon.png`, 180×180). Se trocar o logo, regenere os
   três PNGs em `icons/` a partir do novo `favicon.svg`.
+- O indicador "AO VIVO" (bolinha do avatar + selo no card da Twitch) consulta
+  `decapi.me` (serviço público e gratuito, sem login/token) para saber se o
+  canal `natinhox` está ao vivo na Twitch. É a única chamada externa que o
+  site faz — se o serviço cair, o indicador simplesmente some/mantém o
+  estado "offline", sem quebrar a página. Não cobre a Kick (a API pública da
+  Kick bloqueia chamadas de outros domínios via CORS).

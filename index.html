@@ -9,12 +9,16 @@
   <meta property="og:description" content="Acompanhe as lives, cortes, a Graciosa Roleplay e todas as redes oficiais do NATINHOX." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://renmkxd1.github.io/landing-page-natinhox/" />
-  <meta property="og:image" content="https://renmkxd1.github.io/landing-page-natinhox/avatar-natinhox.png" />
+  <meta property="og:image" content="https://renmkxd1.github.io/landing-page-natinhox/og-banner.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="NATINHOX — Streamer, Gamer, Creator" />
   <meta property="og:locale" content="pt_BR" />
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="NATINHOX | Streamer & Gamer" />
   <meta name="twitter:description" content="Acompanhe as lives, cortes, a Graciosa Roleplay e todas as redes oficiais do NATINHOX." />
-  <meta name="twitter:image" content="https://renmkxd1.github.io/landing-page-natinhox/avatar-natinhox.png" />
+  <meta name="twitter:image" content="https://renmkxd1.github.io/landing-page-natinhox/og-banner.png" />
+  <meta name="twitter:image:alt" content="NATINHOX — Streamer, Gamer, Creator" />
   <title>NATINHOX | Streamer & Gamer</title>
   <link rel="canonical" href="https://renmkxd1.github.io/landing-page-natinhox/" />
   <link rel="icon" href="favicon.svg" type="image/svg+xml" />
@@ -24,7 +28,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="NATINHOX" />
   <link rel="preload" href="fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="avatar-natinhox.png" as="image" />
+  <link rel="preload" href="avatar-natinhox.webp" as="image" type="image/webp" />
   <link rel="stylesheet" href="styles.css" />
   <script type="application/ld+json">
   {
@@ -83,9 +87,12 @@
     <header class="profile">
       <div class="avatar-wrap">
         <div class="avatar">
-          <img src="avatar-natinhox.png" alt="Foto de perfil NATINHOX" width="116" height="116" fetchpriority="high" decoding="async" />
+          <picture>
+            <source srcset="avatar-natinhox.webp" type="image/webp" />
+            <img src="avatar-natinhox.png" alt="Foto de perfil NATINHOX" width="116" height="116" fetchpriority="high" decoding="async" />
+          </picture>
         </div>
-        <span class="status-dot" title="Conteúdo e lives" aria-hidden="true"></span>
+        <span class="status-dot" id="statusDot" title="Status da live" aria-hidden="true"></span>
       </div>
 
       <div class="eyebrow">OFFICIAL CREATOR PAGE</div>
@@ -107,6 +114,7 @@
 
     <section class="featured">
       <a class="featured-card twitch" href="https://www.twitch.tv/natinhox" target="_blank" rel="noopener noreferrer">
+        <span class="live-badge" id="twitchLiveBadge">🔴 AO VIVO</span>
         <div>
           <span class="kicker">PLATAFORMA PRINCIPAL</span>
           <strong>Assista na Twitch</strong>
@@ -129,7 +137,10 @@
       <div class="spotlight-glow" aria-hidden="true"></div>
       <span class="spotlight-badge">PARCEIRO OFICIAL</span>
       <div class="spotlight-body">
-        <img class="spotlight-logo" src="graciosa-logo.png" alt="Logo Graciosa Roleplay" width="112" height="112" loading="lazy" decoding="async" />
+        <picture>
+          <source srcset="graciosa-logo.webp" type="image/webp" />
+          <img class="spotlight-logo" src="graciosa-logo.png" alt="Logo Graciosa Roleplay" width="112" height="112" loading="lazy" decoding="async" />
+        </picture>
         <div class="spotlight-copy">
           <span class="kicker">CIDADE DE ROLEPLAY</span>
           <h2>Graciosa Roleplay</h2>
@@ -198,7 +209,10 @@
 
     <section class="support-banner">
       <a class="support-banner-link" href="https://www.livepix.gg/natinhox" target="_blank" rel="noopener noreferrer">
-        <img class="support-banner-img" src="apoie-natinhox.png" alt="Apoie o NATINHOX via LivePix" width="220" height="275" loading="lazy" decoding="async" />
+        <picture>
+          <source srcset="apoie-natinhox.webp" type="image/webp" />
+          <img class="support-banner-img" src="apoie-natinhox.png" alt="Apoie o NATINHOX via LivePix" width="220" height="275" loading="lazy" decoding="async" />
+        </picture>
         <div class="support-banner-copy">
           <span class="kicker">FORTALEÇA A LIVE</span>
           <h2>Apoie o NATINHOX</h2>

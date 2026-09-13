@@ -12,6 +12,21 @@ document.querySelectorAll('a[target="_blank"]').forEach(link => {
   });
 });
 
+(function checkTwitchLive() {
+  const dot = document.getElementById("statusDot");
+  const badge = document.getElementById("twitchLiveBadge");
+  if (!dot && !badge) return;
+
+  fetch("https://decapi.me/twitch/uptime/natinhox", { cache: "no-store" })
+    .then(res => res.text())
+    .then(text => {
+      const isLive = !/offline/i.test(text.trim());
+      if (dot) dot.classList.toggle("is-live", isLive);
+      if (badge) badge.classList.toggle("show", isLive);
+    })
+    .catch(() => {});
+})();
+
 const shareBtn = document.getElementById("shareBtn");
 const shareBtnLabel = document.getElementById("shareBtnLabel");
 
