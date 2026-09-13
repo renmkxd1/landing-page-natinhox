@@ -47,6 +47,20 @@ if (year) year.textContent = new Date().getFullYear();
   });
 })();
 
+(function loadFollowerCount() {
+  const el = document.getElementById("followerCount");
+  if (!el) return;
+  fetch("https://decapi.me/twitch/followcount/natinhox", { cache: "no-store" })
+    .then(response => response.ok ? response.text() : Promise.reject())
+    .then(text => {
+      const count = Number(text.trim());
+      if (!Number.isInteger(count) || count < 0) return;
+      el.textContent = `${count.toLocaleString("pt-BR")} seguidores na Twitch`;
+      el.hidden = false;
+    })
+    .catch(() => {});
+})();
+
 const shareBtn = document.getElementById("shareBtn");
 const feedback = document.getElementById("shareFeedback");
 const fallback = document.getElementById("shareFallback");

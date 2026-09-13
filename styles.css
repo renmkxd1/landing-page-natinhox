@@ -642,6 +642,7 @@ section[id]{scroll-margin-top:24px}
 .share-fallback input{width:100%;padding:12px;color:var(--text);background:var(--bg);border:1px solid var(--cyan);border-radius:10px;font:inherit;font-size:13px}
 .share-fallback input:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
 #liveStatus{display:block;margin-top:8px;color:#d9c9ff;font-size:11px}
+.follower-count{display:block;margin-top:4px;color:#bcd0ff;font-size:11px;font-weight:700}
 .twitch{padding-top:44px}
 .spotlight-actions a{min-height:44px;display:inline-flex;align-items:center}
 .section-title h2{color:#94a3c7}

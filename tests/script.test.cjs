@@ -4,9 +4,9 @@ const vm = require('node:vm');
 const fs = require('node:fs');
 const source = fs.readFileSync(require('node:path').join(__dirname, '../script.js'), 'utf8');
 
-async function setup({ body = 'natinhox is offline', ok = true, networkError = false, navigator = {} } = {}) {
+async function setup({ body = 'natinhox is offline', ok = true, networkError = false, navigator = {}, followBody = '246', followOk = true } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
+  for (const id of ['year', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'followerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl']) {
     elements.set(id, { hidden: true, textContent: '', classList: { toggle(name, value) { this[name] = value; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
@@ -14,7 +14,13 @@ async function setup({ body = 'natinhox is offline', ok = true, networkError = f
   const document = { hidden: false, getElementById: id => elements.get(id), querySelector: () => ({ href: 'https://example.com/profile/' }), addEventListener() {} };
   vm.runInNewContext(source, { document, navigator, location: { href: 'https://example.com/?private=1#section' }, Date, AbortController,
     setTimeout, clearTimeout, setInterval: fn => { interval = fn; },
-    fetch: async () => { if (networkError) throw Error('network'); return { ok, text: async () => body }; } });
+    fetch: async url => {
+      if (typeof url === 'string' && url.includes('followcount')) {
+        return { ok: followOk, text: async () => followBody };
+      }
+      if (networkError) throw Error('network');
+      return { ok, text: async () => body };
+    } });
   await new Promise(resolve => setImmediate(resolve));
   return { elements, document, refresh: interval };
 }
@@ -29,6 +35,17 @@ for (const options of [{ body: 'natinhox is offline' }, { body: 'Rate limit exce
   test(`never false live: ${JSON.stringify(options)}`, async () => {
     const { elements } = await setup(options);
     assert.equal(elements.get('twitchLiveBadge').classList.show, false);
+  });
+}
+test('valid follower count is shown', async () => {
+  const { elements } = await setup({ followBody: '1234' });
+  assert.equal(elements.get('followerCount').hidden, false);
+  assert.equal(elements.get('followerCount').textContent, '1.234 seguidores na Twitch');
+});
+for (const options of [{ followBody: 'Rate limit exceeded' }, { followBody: '-3' }, { followBody: '12.5' }, { followBody: '', followOk: false }]) {
+  test(`invalid follower count stays hidden: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('followerCount').hidden, true);
   });
 }
 test('clipboard receives canonical URL', async () => {

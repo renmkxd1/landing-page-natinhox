@@ -102,9 +102,11 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   três PNGs em `icons/` a partir do novo `favicon.svg`.
 - O indicador "AO VIVO" (bolinha do avatar + selo no card da Twitch) consulta
   `decapi.me` (serviço público e gratuito, sem login/token) para saber se o
-  canal `natinhox` está ao vivo na Twitch. Além do analytics, é a consulta externa que o
-  site faz — se o serviço cair, o indicador simplesmente some/mantém o
-  estado "offline", sem quebrar a página. Não cobre a Kick (a API pública da
+  canal `natinhox` está ao vivo na Twitch. O mesmo serviço também informa o
+  número de seguidores da Twitch, exibido abaixo do status no card ("X
+  seguidores na Twitch"). Além do analytics, são as únicas consultas externas
+  que o site faz — se o serviço cair, os indicadores simplesmente somem/mantêm
+  o estado anterior, sem quebrar a página. Não cobre a Kick (a API pública da
   Kick bloqueia chamadas de outros domínios via CORS).
 
 ## Melhorias de navegação e confiabilidade
