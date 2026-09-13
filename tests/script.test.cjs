@@ -209,3 +209,16 @@ for (const options of [{ kickBody: { livestream: null, followers_count: -1 } }, 
     assert.equal(elements.get('kickFollowerCount').hidden, true);
   });
 }
+
+test('avatar live dot lights up when only Twitch is live', async () => {
+  const { elements } = await setup({ body: '1 hour, 2 minutes', kickBody: { livestream: null, followers_count: 320 } });
+  assert.equal(elements.get('statusDot').classList['is-live'], true);
+});
+test('avatar live dot lights up when only Kick is live', async () => {
+  const { elements } = await setup({ body: 'natinhox is offline', kickBody: { livestream: { is_live: true, viewer_count: 10 } } });
+  assert.equal(elements.get('statusDot').classList['is-live'], true);
+});
+test('avatar live dot stays dark when both platforms are offline', async () => {
+  const { elements } = await setup({ body: 'natinhox is offline', kickBody: { livestream: null } });
+  assert.equal(elements.get('statusDot').classList['is-live'], false);
+});

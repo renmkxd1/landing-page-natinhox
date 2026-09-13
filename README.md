@@ -118,7 +118,9 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   `manifest.json` + ícones PNG) quanto no iOS/Safari (via
   `icons/apple-touch-icon.png`, 180×180). Se trocar o logo, regenere os
   três PNGs em `icons/` a partir do novo `favicon.svg`.
-- O indicador "AO VIVO" (bolinha do avatar + selo no card da Twitch) consulta
+- A bolinha "ao vivo" no avatar acende se **qualquer uma** das duas plataformas
+  estiver ao vivo (Twitch ou Kick) — não é exclusiva da Twitch.
+- O selo "AO VIVO" no card da Twitch consulta
   `decapi.me` (serviço público e gratuito, sem login/token) para saber se o
   canal `natinhox` está ao vivo na Twitch. O mesmo serviço também informa o
   número de seguidores da Twitch, exibido abaixo do status no card ("X

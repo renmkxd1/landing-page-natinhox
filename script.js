@@ -47,15 +47,20 @@ function celebrate(originEl) {
   }
 }
 
+const liveDot = document.getElementById("statusDot");
+const liveOnPlatform = { twitch: false, kick: false };
+function updateLiveDot() {
+  liveDot?.classList.toggle("is-live", liveOnPlatform.twitch || liveOnPlatform.kick);
+}
+
 (function watchTwitchLive() {
-  const dot = document.getElementById("statusDot");
   const badge = document.getElementById("twitchLiveBadge");
   const status = document.getElementById("liveStatus");
   const embedWrap = document.getElementById("liveEmbed");
   const embedFrame = document.getElementById("liveEmbedFrame");
   const viewerCount = document.getElementById("liveViewerCount");
   const gameEl = document.getElementById("liveGame");
-  if (!dot && !badge && !status) return;
+  if (!liveDot && !badge && !status) return;
   let pending = false;
 
   function updateGame() {
@@ -86,7 +91,8 @@ function celebrate(originEl) {
 
   function render(state) {
     const live = state === "live";
-    dot?.classList.toggle("is-live", live);
+    liveOnPlatform.twitch = live;
+    updateLiveDot();
     badge?.classList.toggle("show", live);
     if (status) status.textContent = live
       ? "Ao vivo agora na Twitch"
@@ -146,12 +152,14 @@ function celebrate(originEl) {
   const embedWrap = document.getElementById("liveEmbedKick");
   const embedFrame = document.getElementById("liveEmbedKickFrame");
   const embedViewerCount = document.getElementById("kickEmbedViewerCount");
-  if (!badge && !status && !followerEl && !embedWrap) return;
+  if (!liveDot && !badge && !status && !followerEl && !embedWrap) return;
   let pending = false;
   let followerShown = false;
 
   function render(state, viewerCount) {
     const live = state === "live";
+    liveOnPlatform.kick = live;
+    updateLiveDot();
     badge?.classList.toggle("show", live);
     if (status) status.textContent = live ? "Ao vivo agora na Kick" : "Confira as lives no canal";
     if (embedWrap && embedFrame) {
