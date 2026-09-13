@@ -9,7 +9,7 @@ async function setup({ body = 'natinhox is offline', ok = true, networkError = f
   viewerBody = '1234', gameBody = 'GTA V', gameOk = true, visited = false, reducedMotion = false,
   kickBody = { livestream: null, followers_count: 320 }, kickOk = true, kickNetworkError = false } = {}) {
   const elements = new Map();
-  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl', 'kickLiveBadge', 'kickStatus', 'kickFollowerCount']) {
+  for (const id of ['year', 'greeting', 'statusDot', 'twitchLiveBadge', 'liveStatus', 'liveGame', 'followerCount', 'graciosaCount', 'liveEmbed', 'liveEmbedFrame', 'liveViewerCount', 'shareBtn', 'shareFeedback', 'shareFallback', 'shareUrl', 'kickLiveBadge', 'kickStatus', 'kickFollowerCount', 'liveEmbedKick', 'liveEmbedKickFrame', 'kickEmbedViewerCount']) {
     elements.set(id, { hidden: true, textContent: '', src: '', classList: { toggle(name, value) { this[name] = value; }, add(name) { this[name] = true; } },
       addEventListener(name, fn) { this[name] = fn; }, focus() { this.focused = true; }, select() { this.selected = true; } });
   }
@@ -162,11 +162,25 @@ test('cancelled sharing does not copy or open fallback', async () => {
   assert.equal(elements.get('shareBtn').disabled, false);
 });
 
-test('Kick live badge and viewer count show while live', async () => {
+test('Kick live badge shows while live', async () => {
   const { elements } = await setup({ kickBody: { livestream: { is_live: true, viewer_count: 512 }, followers_count: 320 } });
   assert.equal(elements.get('kickLiveBadge').classList.show, true);
-  assert.equal(elements.get('kickStatus').textContent, 'Ao vivo agora na Kick · 512 espectadores');
+  assert.equal(elements.get('kickStatus').textContent, 'Ao vivo agora na Kick');
 });
+test('Kick live embed loads and shows viewer count when live', async () => {
+  const { elements } = await setup({ kickBody: { livestream: { is_live: true, viewer_count: 512 }, followers_count: 320 } });
+  assert.equal(elements.get('liveEmbedKick').hidden, false);
+  assert.equal(elements.get('liveEmbedKickFrame').src, 'https://player.kick.com/natinhox1?muted=true');
+  assert.equal(elements.get('kickEmbedViewerCount').textContent, ' · 512 espectadores');
+});
+for (const options of [{ kickBody: { livestream: null, followers_count: 320 } }, { kickOk: false }, { kickNetworkError: true }]) {
+  test(`Kick live embed stays hidden and unloaded: ${JSON.stringify(options)}`, async () => {
+    const { elements } = await setup(options);
+    assert.equal(elements.get('liveEmbedKick').hidden, true);
+    assert.equal(elements.get('liveEmbedKickFrame').src, '');
+    assert.equal(elements.get('kickEmbedViewerCount').textContent, '');
+  });
+}
 test('Kick status stays neutral when offline', async () => {
   const { elements } = await setup({ kickBody: { livestream: null, followers_count: 320 } });
   assert.equal(elements.get('kickLiveBadge').classList.show, false);

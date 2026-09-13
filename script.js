@@ -143,16 +143,30 @@ function celebrate(originEl) {
   const badge = document.getElementById("kickLiveBadge");
   const status = document.getElementById("kickStatus");
   const followerEl = document.getElementById("kickFollowerCount");
-  if (!badge && !status && !followerEl) return;
+  const embedWrap = document.getElementById("liveEmbedKick");
+  const embedFrame = document.getElementById("liveEmbedKickFrame");
+  const embedViewerCount = document.getElementById("kickEmbedViewerCount");
+  if (!badge && !status && !followerEl && !embedWrap) return;
   let pending = false;
   let followerShown = false;
 
   function render(state, viewerCount) {
     const live = state === "live";
     badge?.classList.toggle("show", live);
-    if (status) status.textContent = live
-      ? `Ao vivo agora na Kick${Number.isInteger(viewerCount) ? ` · ${viewerCount.toLocaleString("pt-BR")} espectadores` : ""}`
-      : "Confira as lives no canal";
+    if (status) status.textContent = live ? "Ao vivo agora na Kick" : "Confira as lives no canal";
+    if (embedWrap && embedFrame) {
+      if (live && !embedFrame.src) {
+        embedFrame.src = "https://player.kick.com/natinhox1?muted=true";
+      } else if (!live && embedFrame.src) {
+        embedFrame.src = "";
+      }
+      embedWrap.hidden = !live;
+    }
+    if (embedViewerCount) {
+      embedViewerCount.textContent = live && Number.isInteger(viewerCount)
+        ? ` · ${viewerCount.toLocaleString("pt-BR")} espectadores`
+        : "";
+    }
   }
 
   async function check({ skipIfHidden = false } = {}) {

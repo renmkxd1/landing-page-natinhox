@@ -76,9 +76,11 @@ que estiver sendo servido no momento.
   visita ("Bom dia" / "Boa tarde" / "Boa noite" / "Boa madrugada", calculado no
   navegador da pessoa) e reconhece quem já esteve na página antes ("bem-vindo
   de volta"), usando só `localStorage` local — nada é enviado a lugar nenhum.
-- **Player ao vivo**: quando o NATINHOX está transmitindo, a live da Twitch
-  aparece embutida logo abaixo dos cards de canais — sem precisar clicar em
-  nada — junto com o número de espectadores em tempo real.
+- **Player ao vivo**: quando o NATINHOX está transmitindo na Twitch e/ou na
+  Kick, a live correspondente aparece embutida logo abaixo dos cards de
+  canais — sem precisar clicar em nada — junto com o número de espectadores
+  em tempo real. Cada plataforma tem seu próprio card, selo "AO VIVO",
+  contagem de seguidores e player, checados de forma independente.
 - **Graciosa Roleplay** — banner dourado depois das redes sociais, com a
   logo oficial (`graciosa-logo.png`), badge "PARCEIRO OFICIAL" e botões para
   Discord/Instagram da cidade.
@@ -126,6 +128,12 @@ ISC). Kwai não tem ícone na Simple Icons, por isso mantém um monograma "K".
   da própria Kick, sem login/token, que já responde com CORS liberado).
   Igual à Twitch, qualquer erro ou resposta inesperada mantém o texto neutro
   "Confira as lives no canal" — nunca assume "ao vivo" por engano.
+- Quando a Kick está ao vivo, o player oficial (`player.kick.com`) também
+  carrega embutido, com o mesmo comportamento do player da Twitch (silenciado
+  por padrão, criado só quando a live é confirmada, removido quando termina
+  ou a aba fica em segundo plano). Diferente da Twitch, o embed da Kick
+  **não exige o parâmetro `parent`/domínio autorizado** — funciona em
+  qualquer domínio sem ajuste, inclusive se você trocar de domínio no futuro.
 - Quando a live está ativa, o jogo atual (`decapi.me/twitch/game/natinhox`)
   aparece no card da Twitch ("🎮 Jogando GTA V"), atualizado junto com o
   status a cada 60 segundos. Some automaticamente quando a live termina ou a
